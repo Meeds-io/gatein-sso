@@ -8,9 +8,9 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.gatein.sso</groupId>
+  <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
-  <version>1.5.x-PLF-SNAPSHOT</version>
+  <version>5.0.x-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -48,6 +48,11 @@
 
   <properties>
 
+    <!-- exo -->
+    <org.exoplatform.core.version>5.0.x-SNAPSHOT</org.exoplatform.core.version>
+    <org.exoplatform.ws.version>5.0.x-SNAPSHOT</org.exoplatform.ws.version>
+    <org.exoplatform.gatein.wci.version>5.0.x-SNAPSHOT</org.exoplatform.gatein.wci.version>
+
     <!-- logging -->
     <version.commons-logging>1.1.1</version.commons-logging>
 
@@ -73,11 +78,6 @@
 
     <!-- apache axis -->
     <version.axis>1.4</version.axis>
-
-    <!-- exo -->
-    <org.exoplatform.core.version>2.6.0-GA</org.exoplatform.core.version>
-    <org.exoplatform.ws.version>2.4.0-GA</org.exoplatform.ws.version>
-    <org.gatein.wci.version>2.4.2.Final</org.gatein.wci.version>
 
     <!--  SPNEGO support using JBoss Negotiation -->
     <version.jboss.negotiation>2.2.5.Final</version.jboss.negotiation>
@@ -111,72 +111,72 @@
 
       <!-- internal -->
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-auth-callback</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-agent</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-integration</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-common-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-cas-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-cas4-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-josso-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-agent-josso181</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-agent-josso182</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-josso-181</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-josso-182</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-opensso-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>spnego</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.sso</groupId>
+        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-saml-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -295,9 +295,9 @@
         <version>${org.exoplatform.core.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.gatein.wci</groupId>
+        <groupId>org.exoplatform.gatein.wci</groupId>
         <artifactId>wci-wci</artifactId>
-        <version>${org.gatein.wci.version}</version>
+        <version>${org.exoplatform.gatein.wci.version}</version>
       </dependency>
 
 

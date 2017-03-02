@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <parent>
       <artifactId>sso-saml-parent</artifactId>
-      <groupId>org.gatein.sso</groupId>
-      <version>1.5.x-PLF-SNAPSHOT</version>
+      <groupId>org.exoplatform.gatein.sso</groupId>
+      <version>5.0.x-SNAPSHOT</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
 
    <modelVersion>4.0.0</modelVersion>
-   <groupId>org.gatein.sso</groupId>
+   <groupId>org.exoplatform.gatein.sso</groupId>
    <artifactId>sso-saml-plugin</artifactId>
    <packaging>jar</packaging>
 
@@ -46,17 +46,17 @@
          <artifactId>javax.servlet-api</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.gatein.sso</groupId>
+         <groupId>org.exoplatform.gatein.sso</groupId>
          <artifactId>sso-common-plugin</artifactId>
       </dependency>
       <!-- We need only gatein common-logging, but we don't have dependency on gatein-common in parent for now... -->
       <dependency>
-         <groupId>org.gatein.wci</groupId>
+         <groupId>org.exoplatform.gatein.wci</groupId>
          <artifactId>wci-wci</artifactId>
       </dependency>
       <!-- Needed only for SSOUtils. TODO: Try to improve to avoid this dependency maybe -->
       <dependency>
-         <groupId>org.gatein.sso</groupId>
+         <groupId>org.exoplatform.gatein.sso</groupId>
          <artifactId>sso-integration</artifactId>
       </dependency>
    </dependencies>

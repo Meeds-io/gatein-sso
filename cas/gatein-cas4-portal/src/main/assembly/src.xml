@@ -17,8 +17,8 @@
       <useProjectArtifact>false</useProjectArtifact>
       <useTransitiveDependencies>false</useTransitiveDependencies>
       <includes>
-        <include>org.gatein.sso:sso-common-plugin</include>
-        <include>org.gatein.sso:sso-cas4-plugin</include>
+        <include>org.exoplatform.gatein.sso:sso-common-plugin</include>
+        <include>org.exoplatform.gatein.sso:sso-cas4-plugin</include>
         <include>commons-httpclient:commons-httpclient</include>
       </includes>
     </dependencySet>

@@ -19,8 +19,8 @@
        <useProjectArtifact>false</useProjectArtifact>
        <useTransitiveDependencies>false</useTransitiveDependencies>
        <includes>
-         <include>org.gatein.sso:sso-common-plugin</include>
-         <include>org.gatein.sso:sso-saml-plugin</include>
+         <include>org.exoplatform.gatein.sso:sso-common-plugin</include>
+         <include>org.exoplatform.gatein.sso:sso-saml-plugin</include>
        </includes>
      </dependencySet>
 

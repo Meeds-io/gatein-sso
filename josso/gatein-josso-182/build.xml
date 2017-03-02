@@ -38,17 +38,17 @@
     ~ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     -->
     <module-def name="org.gatein.sso">
-      <maven-resource group="org.gatein.sso" artifact="sso-auth-callback" />
-      <maven-resource group="org.gatein.sso" artifact="sso-agent" />
-      <maven-resource group="org.gatein.sso" artifact="sso-integration" />
-      <maven-resource group="org.gatein.sso" artifact="sso-saml-plugin" />
+      <maven-resource group="org.exoplatform.gatein.sso" artifact="sso-auth-callback" />
+      <maven-resource group="org.exoplatform.gatein.sso" artifact="sso-agent" />
+      <maven-resource group="org.exoplatform.gatein.sso" artifact="sso-integration" />
+      <maven-resource group="org.exoplatform.gatein.sso" artifact="sso-saml-plugin" />
       <maven-resource group="commons-discovery" artifact="commons-discovery" />
       <maven-resource group="org.apache.axis" artifact="axis" />
       <maven-resource group="org.springframework" artifact="spring-beans" />
       <maven-resource group="org.springframework" artifact="spring-context" />
       <maven-resource group="org.springframework" artifact="spring-core" />
       <maven-resource group="org.apache.xbean" artifact="xbean-spring" />
-      <maven-resource group="org.gatein.sso" artifact="sso-agent-josso182" />
+      <maven-resource group="org.exoplatform.gatein.sso" artifact="sso-agent-josso182" />
       <maven-resource group="org.josso" artifact="josso-agents-bin" />
       <maven-resource group="org.josso" artifact="josso-agent-shared" />
     </module-def>

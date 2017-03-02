@@ -40,8 +40,8 @@
 			<includes>
 				<include>commons-httpclient:commons-httpclient</include>
 				<include>commons-logging:commons-logging</include>
-        <include>org.gatein.sso:sso-common-plugin</include>
-				<include>org.gatein.sso:sso-josso-plugin</include>
+        <include>org.exoplatform.gatein.sso:sso-common-plugin</include>
+				<include>org.exoplatform.gatein.sso:sso-josso-plugin</include>
 			</includes>
 		</dependencySet>
 
@@ -52,8 +52,8 @@
          <includes>
             <include>commons-httpclient:commons-httpclient</include>
             <include>commons-logging:commons-logging</include>
-            <include>org.gatein.sso:sso-common-plugin</include>
-            <include>org.gatein.sso:sso-josso-plugin</include>
+            <include>org.exoplatform.gatein.sso:sso-common-plugin</include>
+            <include>org.exoplatform.gatein.sso:sso-josso-plugin</include>
          </includes>
       </dependencySet>
 

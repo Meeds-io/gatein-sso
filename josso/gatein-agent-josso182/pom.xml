@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <parent>
       <artifactId>sso-josso-parent</artifactId>
-      <groupId>org.gatein.sso</groupId>
-      <version>1.5.x-PLF-SNAPSHOT</version>
+      <groupId>org.exoplatform.gatein.sso</groupId>
+      <version>5.0.x-SNAPSHOT</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
@@ -22,7 +22,7 @@
        <artifactId>josso-agent-shared</artifactId>
      </dependency>
      <dependency>
-       <groupId>org.gatein.sso</groupId>
+       <groupId>org.exoplatform.gatein.sso</groupId>
        <artifactId>sso-agent</artifactId>
      </dependency>
    </dependencies>
