@@ -152,9 +152,11 @@ public class OpenSSOAgentImpl extends GenericAgent implements OpenSSOAgent
     * This method is useful only for Cross-Domain (CD) authentication scenario when GateIn and OpenSSO are in different DNS domains and they can't share cookie.
     *
     * It performs:
+    * <ul>
     * <li>Parse and validate message from OpenSSO CDCServlet.</li>
     * <li>Use ssoToken from parsed message and establish OpenSSO cookie iPlanetDirectoryPro</li>
     * <li>Redirects to InitiateLoginFilter but with cookie established. So in next request, we can perform agent validation against OpenSSO server</li>
+    * </ul>
     *
     * @param httpRequest
     * @param httpResponse

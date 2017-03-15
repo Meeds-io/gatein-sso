@@ -48,6 +48,9 @@
 
   <properties>
 
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+
     <!-- exo -->
     <org.exoplatform.core.version>5.0.x-SNAPSHOT</org.exoplatform.core.version>
     <org.exoplatform.ws.version>5.0.x-SNAPSHOT</org.exoplatform.ws.version>
@@ -422,6 +425,20 @@
           <maxmem>1024m</maxmem>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>
+              <name>org.apache.xbean.XBean</name>
+              <placement>a</placement>
+              <head>org.apache.xbean.XBean annotation</head>
+            </tag>
+          </tags>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 

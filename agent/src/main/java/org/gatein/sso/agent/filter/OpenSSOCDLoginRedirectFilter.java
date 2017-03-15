@@ -67,9 +67,11 @@ public class OpenSSOCDLoginRedirectFilter extends LoginRedirectFilter
    /**
     * Constructs URL for redirection to OpenSSO CDCServlet.
     * It will be something like:
+    * {@code
     * http://localhost:8888/opensso/cdcservlet?realm=gatein&goto=http://opensso.local.network:8080/portal/initiatessologin&
     * ProviderID=http://opensso.local.network:8080/portal/initiatessologin/?Realm=ggatein
     * &RequestID=124&IssueInstant=2012-04-10T23:28:50Z&MajorVersion=1&MinorVersion=0
+    * }
     *
     * @return url for redirection
     */
