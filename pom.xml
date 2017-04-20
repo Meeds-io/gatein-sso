@@ -47,6 +47,17 @@
   </modules>
 
   <properties>
+    <!-- ***************** -->
+    <!-- Repository Deployment URLs for eXo -->
+    <!-- ***************** -->
+    <jboss.releases.repo.url>http://repository.exoplatform.org/service/local/staging/deploy/maven2/</jboss.releases.repo.url>
+    <jboss.snapshots.repo.url>http://repository.exoplatform.org/content/repositories/exo-snapshots/</jboss.snapshots.repo.url>
+
+    <!-- Config for eXo Release Manager-->
+    <useReleaseProfile>false</useReleaseProfile>
+    <version.release.plugin>2.5.1</version.release.plugin>
+    <pushChanges>false</pushChanges>
+    <autoVersionSubmodules>true</autoVersionSubmodules>
 
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
