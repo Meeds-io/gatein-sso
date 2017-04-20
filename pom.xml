@@ -344,49 +344,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <repositories>
-    <repository>
-      <id>jboss-public-repository-group</id>
-      <name>JBoss Repository</name>
-      <layout>default</layout>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <id>josso-m2-repo</id>
-      <name>JOSSO Maven2 Repository</name>
-      <url>http://repository.josso.org</url>
-      <releases>
-        <checksumPolicy>fail</checksumPolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <checksumPolicy>fail</checksumPolicy>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-
-    <!-- Needed for JOSSO2 -->
-    <repository>
-      <id>atricore-m2-repo</id>
-      <name>Atricore Maven2 Repository</name>
-      <url>http://repository.atricore.org/m2-release-repository</url>
-      <releases>
-        <checksumPolicy>fail</checksumPolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <checksumPolicy>fail</checksumPolicy>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-
-  </repositories>
-
-
   <build>
     <!-- Set plugin versions here -->
     <pluginManagement>
