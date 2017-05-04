@@ -41,7 +41,7 @@
 				<executions>
 					<execution>
 						<configuration>
-							<namespace>urn:org:gatein:sso:josso:plugin:gateinidentityplugin</namespace>
+							<namespace>urn:org:gatein:sso:josso:plugin:gateinidentityplugin:${project.version}</namespace>
 						</configuration>
 						<goals>
 							<goal>mapping</goal>
