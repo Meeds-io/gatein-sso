@@ -37,7 +37,7 @@ import javax.servlet.FilterConfig;
  *
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
-class SSOInterceptorInitializationContext
+public class SSOInterceptorInitializationContext
 {
    private final FilterConfig filterConfig;
    private final InitParams initParams;
@@ -48,7 +48,7 @@ class SSOInterceptorInitializationContext
    private final boolean initializedFromServletAPI;
 
 
-   SSOInterceptorInitializationContext(FilterConfig filterConfig, InitParams initParams, ExoContainerContext containerContext)
+   public SSOInterceptorInitializationContext(FilterConfig filterConfig, InitParams initParams, ExoContainerContext containerContext)
    {
       this.filterConfig = filterConfig;
       this.initParams = initParams;
@@ -57,7 +57,7 @@ class SSOInterceptorInitializationContext
       this.initializedFromServletAPI = filterConfig != null;
    }
 
-   String getInitParameter(String paramName)
+   public String getInitParameter(String paramName)
    {
       if (initParams != null)
       {
@@ -67,8 +67,6 @@ class SSOInterceptorInitializationContext
 
       return filterConfig.getInitParameter(paramName);
    }
-
-
 
    /**
     * Substitus portal container string @@portal.container.name@@ with portal container name
@@ -82,12 +80,12 @@ class SSOInterceptorInitializationContext
       return input.replaceAll(AbstractSSOInterceptor.PORTAL_CONTAINER_SUBSTITUTION_PATTERN, this.containerName);
    }
 
-   boolean isInitializedFromServletAPI()
+   public boolean isInitializedFromServletAPI()
    {
       return initializedFromServletAPI;
    }
 
-   ExoContainer getExoContainer()
+   public ExoContainer getExoContainer()
    {
       return containerContext.getContainer();
    }

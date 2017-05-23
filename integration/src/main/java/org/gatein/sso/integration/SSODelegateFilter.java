@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Filter will delegate to SSO interceptors
@@ -130,14 +131,13 @@ public class SSODelegateFilter extends AbstractFilter
       }
    }
 
-   // Primitive impl, but seems to be sufficient for our purposes. Could be overriden if needed
-   protected boolean isMappedTo(String filterMapping, String contextPath)
+   protected boolean isMappedTo(String filterMapping, String path)
    {
       if ("/*".equals(filterMapping))
       {
          return true;
       }
-      else if (contextPath.startsWith(filterMapping))
+      else if (Pattern.compile(filterMapping).matcher(path).matches())
       {
          return true;
       }

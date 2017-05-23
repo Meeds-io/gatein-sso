@@ -24,17 +24,16 @@
 <html>
 <head>
 <title>Welcome to JBoss Application Server 7</title>
-<link rel="StyleSheet" href="css/idp.css" type="text/css">
+<link rel="StyleSheet" href="<%= request.getContextPath()%>/css/idp.css" type="text/css">
 </head>
 
 <body>
-	<img src="images/picketlink-banner-1180px.png"
+	<img src="<%= request.getContextPath()%>/images/picketlink-banner-1180px.png"
 		style="margin-top: -10px; margin-left: -10px; opacity: 0.4; filter: alpha(opacity = 40);" />
 	<div class="loginBox"
 		style="margin-bottom: 80px; border: 1px solid #000000; width: 310px; background-color: #F8F8F8; align: center;">
 		<form id="login_form" name="login_form" method="post"
-			action="j_security_check" enctype="application/x-www-form-urlencoded"
-			accept-charset="UTF-8">
+			action="j_security_check" enctype="application/x-www-form-urlencoded">
 			<center>
 				<p>
 					Welcome to the <b>PicketLink Identity Provider</b>

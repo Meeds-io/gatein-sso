@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.gatein.common.logging.Logger;
 import org.gatein.common.logging.LoggerFactory;
 import org.gatein.sso.agent.GenericAgent;
@@ -20,6 +21,8 @@ import org.gatein.sso.agent.filter.api.AbstractSSOInterceptor;
 import org.gatein.sso.agent.josso.JOSSOAgent;
 import org.gatein.sso.agent.opensso.OpenSSOAgent;
 import org.gatein.wci.security.Credentials;
+
+import org.exoplatform.commons.utils.PropertyManager;
 
 /**
  * @author soshah
@@ -149,15 +152,24 @@ public class InitiateLoginFilter extends AbstractSSOInterceptor
             String portalContext = req.getContextPath();
             if(req.getAttribute("abort") != null)
             {
-                String ssoRedirect = portalContext + "/sso";
+                String ssoSuffix = PropertyManager.getProperty("gatein.sso.uri.suffix");
+                if(StringUtils.isBlank(ssoSuffix)) {
+                  ssoSuffix = "/sso";
+                }
+                String ssoRedirect = portalContext + (ssoSuffix.startsWith("/") ? ssoSuffix : ("/" + ssoSuffix));
                 resp.sendRedirect(ssoRedirect);
                 return;
             }
 
-            String loginRedirectURL = resp.encodeRedirectURL(getLoginRedirectUrl(req));
-            resp.sendRedirect(loginRedirectURL);
-
-            return;
+            String loginRedirectURL = getLoginRedirectUrl(req);
+            if (StringUtils.isBlank(loginRedirectURL)) {
+              log.warn("Can't redirect to null SSO URL");
+              chain.doFilter(request, response);
+            } else {
+              loginRedirectURL = resp.encodeRedirectURL(loginRedirectURL);
+              resp.sendRedirect(loginRedirectURL);
+              return;
+            }
         }
         catch(Exception e)
         {
@@ -169,7 +181,7 @@ public class InitiateLoginFilter extends AbstractSSOInterceptor
     {    
     }
     
-    private void processSSOToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception
+    protected void processSSOToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception
     {
         String ticket = httpRequest.getParameter("ticket");
         String jossoAssertion = httpRequest.getParameter("josso_assertion_id");
@@ -234,6 +246,9 @@ public class InitiateLoginFilter extends AbstractSSOInterceptor
 
    protected String getLoginRedirectUrl(HttpServletRequest req)
    {
+      if(this.loginUrl == null) {
+        return null;
+      }
       StringBuilder url = new StringBuilder(this.loginUrl);
 
       if (attachUsernamePasswordToLoginURL)

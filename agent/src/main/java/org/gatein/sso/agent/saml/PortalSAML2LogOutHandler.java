@@ -37,6 +37,7 @@ import org.picketlink.identity.federation.web.handlers.saml2.SAML2LogOutHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.picketlink.common.exceptions.ProcessingException;
+import javax.servlet.http.Cookie;
 
 /**
  * Extension of {@link SAML2LogOutHandler} because we need to enforce WCI (crossContext) logout in portal environment.
@@ -45,6 +46,10 @@ import org.picketlink.common.exceptions.ProcessingException;
  */
 public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
 {
+  private static final String COOKIE_NAME = "rememberme";
+
+  private static final String OAUTH_COOKIE_NAME = "oauth_rememberme";
+
    private static Logger log = LoggerFactory.getLogger(PortalSAML2LogOutHandler.class);
    
    @Override
@@ -113,13 +118,20 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
       }
       catch (Exception e)
       {
-         String message = "Session has been invalidated but WCI logout failed.";
-         log.warn(message);
-         if (log.isTraceEnabled())
-         {
-            log.trace(message, e);
-         }
+         log.warn("Session has been invalidated but WCI logout failed.", e);
       }
+
+      // Remove rememberme cookie
+      Cookie cookie = new Cookie(COOKIE_NAME, "");
+      cookie.setPath(request.getContextPath());
+      cookie.setMaxAge(0);
+      response.addCookie(cookie);
+  
+      // Remove oauth cookie
+      Cookie oauthCookie = new Cookie(OAUTH_COOKIE_NAME, "");
+      oauthCookie.setPath(request.getContextPath());
+      oauthCookie.setMaxAge(0);
+      response.addCookie(oauthCookie);
    }
    
 }

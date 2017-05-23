@@ -81,7 +81,7 @@ public abstract class AbstractSSOInterceptor extends AbstractFilter implements S
     * @param paramName parameter name
     * @return parameter value
     */
-   protected String getInitParameter(String paramName)
+   public String getInitParameter(String paramName)
    {
       return interceptorContext.getInitParameter(paramName);
    }

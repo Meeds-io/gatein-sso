@@ -23,25 +23,25 @@
 
 package org.gatein.sso.integration;
 
-import org.apache.catalina.Contained;
-import org.apache.catalina.Container;
-import org.apache.catalina.Lifecycle;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.LifecycleListener;
-import org.apache.catalina.Valve;
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
-import org.apache.catalina.util.LifecycleSupport;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
-import org.jboss.servlet.http.HttpEvent;
+import java.io.IOException;
+import java.lang.reflect.Method;
 
 import javax.management.MBeanRegistration;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.servlet.ServletException;
-import java.io.IOException;
-import java.lang.reflect.Method;
+
+import org.apache.catalina.Contained;
+import org.apache.catalina.Container;
+import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
+import org.apache.catalina.LifecycleState;
+import org.apache.catalina.Valve;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.gatein.common.logging.Logger;
+import org.gatein.common.logging.LoggerFactory;
 
 /**
  * Delegates work to another valve configured through option 'delegateValveClassName'. It's possible to disable
@@ -76,8 +76,6 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
    // Used only for SAML2 when acting as SP
    private String samlSPConfigFile;
 
-   private LifecycleSupport lifecycle = new LifecycleSupport(this);
-
    public void setDelegateValveClassName(String delegateValve)
    {
       this.delegateValveClassName = substituteSystemProperty(delegateValve);
@@ -94,21 +92,6 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
    public void setSamlSPConfigFile(String configFile)
    {
       this.samlSPConfigFile = substituteSystemProperty(configFile);
-   }
-
-   // Valve methods
-
-   public String getInfo()
-   {
-      if (delegationEnabled)
-      {
-         Valve delegate = getOrLoadDelegate(delegateValveClassName);
-         return delegate.getInfo();
-      }
-      else
-      {
-         return "SSODelegateValve with disabled delegation";
-      }
    }
 
    public Valve getNext()
@@ -157,19 +140,6 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
       else
       {
          next.invoke(request, response);
-      }
-   }
-
-   public void event(Request request, Response response, HttpEvent event) throws IOException, ServletException
-   {
-      if (delegationEnabled)
-      {
-         Valve delegate = getOrLoadDelegate(delegateValveClassName);
-         delegate.event(request, response, event);
-      }
-      else
-      {
-         next.event(request, response, event);
       }
    }
 
@@ -256,10 +226,6 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
             return;
          }
       }
-      else
-      {
-         lifecycle.addLifecycleListener(listener);
-      }
    }
 
    public LifecycleListener[] findLifecycleListeners()
@@ -271,15 +237,8 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
          {
             return ((Lifecycle) delegate).findLifecycleListeners();
          }
-         else
-         {
-            return new LifecycleListener[0];
-         }
       }
-      else
-      {
-         return lifecycle.findLifecycleListeners();
-      }
+      return new LifecycleListener[0];
    }
 
    public void removeLifecycleListener(LifecycleListener listener)
@@ -292,10 +251,6 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
             ((Lifecycle) delegate).removeLifecycleListener(listener);
             return;
          }
-      }
-      else
-      {
-         lifecycle.removeLifecycleListener(listener);
       }
    }
 
@@ -368,4 +323,67 @@ public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Li
       input = input.replace("#", "$");
       return SSOUtils.substituteSystemProperty(input);
    }
+
+  @Override
+  public void init() throws LifecycleException {
+    if (delegationEnabled)
+    {
+       Valve delegate = getOrLoadDelegate(delegateValveClassName);
+       if (delegate instanceof Lifecycle)
+       {
+          ((Lifecycle) delegate).init();
+       }
+    }
+  }
+
+  @Override
+  public void destroy() throws LifecycleException {
+    if (delegationEnabled)
+    {
+       Valve delegate = getOrLoadDelegate(delegateValveClassName);
+       if (delegate instanceof Lifecycle)
+       {
+          ((Lifecycle) delegate).destroy();
+       }
+    }
+  }
+
+  @Override
+  public LifecycleState getState() {
+    if (delegationEnabled)
+    {
+       Valve delegate = getOrLoadDelegate(delegateValveClassName);
+       if (delegate instanceof Lifecycle)
+       {
+          return ((Lifecycle) delegate).getState();
+       }
+    }
+    return null;
+  }
+
+  @Override
+  public String getStateName() {
+    if (delegationEnabled)
+    {
+       Valve delegate = getOrLoadDelegate(delegateValveClassName);
+       if (delegate instanceof Lifecycle)
+       {
+          return ((Lifecycle) delegate).getStateName();
+       }
+    }
+    return null;
+  }
+
+  @Override
+  public boolean isAsyncSupported() {
+    if (delegationEnabled)
+    {
+       Valve delegate = getOrLoadDelegate(delegateValveClassName);
+       if (delegate instanceof Valve)
+       {
+          return ((Valve) delegate).isAsyncSupported();
+       }
+    }
+    return false;
+  }
 }

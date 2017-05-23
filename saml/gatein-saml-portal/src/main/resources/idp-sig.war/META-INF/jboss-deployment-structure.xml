@@ -2,10 +2,8 @@
   <deployment>
     <!-- Add picketlink module dependency -->
     <dependencies>
-      <module name="org.picketlink.idm"/>
-      <module name="org.picketlink.federation.bindings"/>
+      <module name="org.picketlink" slot="gatein"/>
       <module name="org.apache.httpcomponents" />
-      <module name="org.picketlink.federation" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

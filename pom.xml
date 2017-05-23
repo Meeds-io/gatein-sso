@@ -19,10 +19,8 @@
     <version>1.3.0.Final</version>
   </parent>
 
-
   <name>Gatein - Single Sign On Integration</name>
   <description>GateIn Single Sign On Integration</description>
-
 
   <scm>
     <connection>scm:git:git://github.com/exoplatform/gatein-sso.git</connection>
@@ -30,7 +28,6 @@
     <url>https://github.com/exoplatform/gatein-sso</url>
     <tag>HEAD</tag>
   </scm>
-
 
   <modules>
     <module>agent</module>
@@ -64,6 +61,7 @@
 
     <!-- exo -->
     <org.exoplatform.core.version>5.0.x-SNAPSHOT</org.exoplatform.core.version>
+    <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
     <org.exoplatform.ws.version>5.0.x-SNAPSHOT</org.exoplatform.ws.version>
     <org.exoplatform.gatein.wci.version>5.0.x-SNAPSHOT</org.exoplatform.gatein.wci.version>
 
@@ -96,8 +94,11 @@
     <!--  SPNEGO support using JBoss Negotiation -->
     <version.jboss.negotiation>2.2.5.Final</version.jboss.negotiation>
 
-    <!-- JBoss Web -->
-    <version.jboss.web>7.2.0.Final</version.jboss.web>
+    <!-- Tomcat 8 -->
+    <version.tomcat8>8.5.13</version.tomcat8>
+
+    <!-- Wildfly undertow -->
+    <version.wildfly.undertow>10.1.0.Final</version.wildfly.undertow>
 
     <version.org.jboss.jandex>1.0.3.Final</version.org.jboss.jandex>
 
@@ -109,6 +110,8 @@
     <!-- buildnumber-maven-plugin : needs 1.0 for git -->
     <version.buildnumber.plugin>1.0</version.buildnumber.plugin>
 
+    <!-- PicketLink SAML -->
+    <version.picketlink.fed>2.5.5.Final</version.picketlink.fed>
   </properties>
 
   <dependencyManagement>
@@ -327,11 +330,41 @@
         <version>${version.jboss.negotiation}</version>
       </dependency>
 
-      <!-- JBoss Web -->
+      <!-- Wildfly Undertow -->
       <dependency>
-        <groupId>org.jboss.web</groupId>
-        <artifactId>jbossweb</artifactId>
-        <version>${version.jboss.web}</version>
+        <groupId>org.wildfly</groupId>
+        <artifactId>wildfly-undertow</artifactId>
+        <version>${version.wildfly.undertow}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- Tomcat 8 -->
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-catalina</artifactId>
+        <version>${version.tomcat8}</version>
+      </dependency>
+
+      <!-- Picketlink SAML -->
+      <dependency>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-federation</artifactId>
+        <version>${version.picketlink.fed}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.picketlink.distribution</groupId>
+         <artifactId>picketlink-wildfly8</artifactId>
+        <version>${version.picketlink.fed}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-common</artifactId>
+        <version>${version.picketlink.fed}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-config</artifactId>
+        <version>${version.picketlink.fed}</version>
       </dependency>
 
       <!-- SSO plugins -->
@@ -339,6 +372,12 @@
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>${version.commons-logging}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>javax.servlet-api</artifactId>
+        <version>${javax.servlet.api.version}</version>
       </dependency>
 
     </dependencies>
