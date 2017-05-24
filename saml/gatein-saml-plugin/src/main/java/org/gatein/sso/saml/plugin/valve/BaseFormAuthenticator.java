@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.security.GeneralSecurityException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +132,8 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * If the request.getRemoteAddr is not exactly the IDP address that you have keyed in your deployment descriptor for
      * keystore alias, you can set it here explicitly
+     * 
+     * @param idpAddress IP address of IDP
      */
     public void setIdpAddress(String idpAddress) {
         this.idpAddress = idpAddress;
@@ -140,7 +141,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Get the name of the configuration file
-     * @return
+     * @return SAML config file path
      */
     public String getConfigFile() {
         return configFile;
@@ -148,7 +149,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Set the name of the configuration file
-     * @param configFile
+     * @param configFile set config file path
      */
     public void setConfigFile(String configFile) {
         this.configFile = configFile;
@@ -156,7 +157,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Set the SAML Handler Chain Class fqn
-     * @param samlHandlerChainClass
+     * @param samlHandlerChainClass FQN of SAML Handler Chain
      */
     public void setSamlHandlerChainClass(String samlHandlerChainClass) {
         this.samlHandlerChainClass = samlHandlerChainClass;
@@ -164,7 +165,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Set the service URL
-     * @param serviceURL
+     * @param serviceURL Service URL
      */
     public void setServiceURL(String serviceURL) {
         this.serviceURL = serviceURL;
@@ -173,7 +174,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Set whether the authenticator saves/restores the request
      * during form authentication
-     * @param saveRestoreRequest
+     * @param saveRestoreRequest saves/restores the request during authentication if true
      */
     public void setSaveRestoreRequest(boolean saveRestoreRequest) {
         this.saveRestoreRequest = saveRestoreRequest;
@@ -198,7 +199,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Set an instance of the {@link SAMLConfigurationProvider}
-     * @param configProvider
+     * @param configProvider SAML IDP/SP config provider
      */
     public void setConfigProvider(SAMLConfigurationProvider configProvider) {
         this.configProvider = configProvider;
@@ -206,7 +207,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Get the {@link SPType}
-     * @return
+     * @return SAML SP configuration
      */
     public SPType getConfiguration() {
         return spConfiguration;
@@ -215,7 +216,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Set a separate issuer id
      *
-     * @param issuerID
+     * @param issuerID id of the issuer
      */
     public void setIssuerID(String issuerID) {
         this.issuerID = issuerID;
@@ -223,7 +224,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
 
     /**
      * Set the logout page
-     * @param logOutPage
+     * @param logOutPage logout page URL
      */
     public void setLogOutPage(String logOutPage) {
         logger.warn("Option logOutPage is now configured with the PicketLinkSP element.");
@@ -243,10 +244,8 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Perform validation os the request object
      *
-     * @param request
-     * @return
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * @param request Apache Catalina Request
+     * @return true if request contains a SAML Response parameter
      */
     protected boolean validate(Request request) {
         return request.getParameter("SAMLResponse") != null;
@@ -255,7 +254,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Get the Identity URL
      *
-     * @return
+     * @return Identity URL 
      */
     public String getIdentityURL() {
         return identityURL;
@@ -273,11 +272,11 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Fall back on local authentication at the service provider side
      *
-     * @param request
-     * @param response
-     * @param loginConfig
-     * @return
-     * @throws IOException
+     * @param request Apache Catalina Request
+     * @param response Apache Catalina Response
+     * @param loginConfig  Apache Catalina Login Config
+     * @return true if authenticated
+     * @throws IOException any I/O error during authentication
      */
     protected boolean localAuthentication(Request request, Response response, LoginConfig loginConfig) throws IOException {
         if (request.getUserPrincipal() == null) {
@@ -302,14 +301,14 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
     /**
      * Return the SAML Binding that this authenticator supports
      *
-     * @see {@link JBossSAMLURIConstants#SAML_HTTP_POST_BINDING}
-     * @see {@link JBossSAMLURIConstants#SAML_HTTP_REDIRECT_BINDING}
-     * @return
+     * @return supported SAML Binding
      */
     protected abstract String getBinding();
 
     /**
      * Attempt to process a metadata file available locally
+     * 
+     * @param idpMetadataFile path of configuration file of IDP Metadata
      */
     protected void processIDPMetadataFile(String idpMetadataFile) {
         ServletContext servletContext = context.getServletContext();
@@ -607,7 +606,7 @@ public abstract class BaseFormAuthenticator extends FormAuthenticator {
      * override this method.
      * </p>
      *
-     * @return
+     * @return true if SP Configuration supports signature
      */
     protected boolean doSupportSignature() {
         if (spConfiguration != null) {

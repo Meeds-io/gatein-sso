@@ -178,7 +178,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
    * works in both types of initialization (Case1: Filter initialization through
    * kernel, Case2: initialization through servlet API)
    * 
-   * @throws ServletException
+   * @throws ServletException an init exception happens when calling super class init method
    */
   protected void initImpl() throws ServletException {
     FilterConfig filterConfig = getFilterConfig(null);

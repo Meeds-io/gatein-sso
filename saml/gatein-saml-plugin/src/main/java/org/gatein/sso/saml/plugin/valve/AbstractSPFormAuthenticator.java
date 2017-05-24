@@ -90,14 +90,14 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      *
      * @param destination idp url
      * @param samlDocument request or response document
-     * @param relayState
-     * @param response
-     * @param request
+     * @param relayState used in SAML Workflow
+     * @param response Apache Catalina HTTP Response
+     * @param request Apache Catalina HTTP Request
      * @param willSendRequest are we sending Request or Response to IDP
      * @param destinationQueryStringWithSignature used only with Redirect binding and with signature enabled.
-     * @throws ProcessingException
-     * @throws ConfigurationException
-     * @throws IOException
+     * @throws ProcessingException Exception to indicate a server processing error
+     * @throws ConfigurationException Exception indicating an issue with the configuration
+     * @throws IOException I/O exception
      */
     protected void sendRequestToIDP(String destination, Document samlDocument, String relayState, Request request, Response response,
         boolean willSendRequest, String destinationQueryStringWithSignature) throws ProcessingException, ConfigurationException, IOException {
@@ -118,15 +118,16 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * Sends a HTTP Redirect request to the IDP.
      * </p>
      *
-     * @param destination
-     * @param relayState
-     * @param response
-     * @param willSendRequest
-     * @param destinationQueryStringWithSignature
-     * @throws IOException
-     * @throws UnsupportedEncodingException
-     * @throws ConfigurationException
-     * @throws ProcessingException
+     * @param destination idp url 
+     * @param samlDocument SAML request document
+     * @param relayState used in SAML Workflow
+     * @param response Apache Catalina HTTP Response
+     * @param willSendRequest are we sending Request or Response to IDP
+     * @param destinationQueryStringWithSignature used only with Redirect binding and with signature enabled.
+     * @throws IOException I/O exception
+     * @throws UnsupportedEncodingException when decoding SAML Message
+     * @throws ConfigurationException Exception indicating an issue with the configuration
+     * @throws ProcessingException Exception to indicate a server processing error
      */
     protected void sendHttpRedirectRequest(String destination, Document samlDocument, String relayState, Response response,
             boolean willSendRequest, String destinationQueryStringWithSignature) throws IOException,
@@ -155,15 +156,14 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * Sends a HTTP POST request to the IDP.
      * </p>
      *
-     * @param destination
-     * @param samlDocument
-     * @param relayState
-     * @param response
-     * @param willSendRequest
-     * @throws TrustKeyProcessingException
-     * @throws ProcessingException
-     * @throws IOException
-     * @throws ConfigurationException
+     * @param destination idp url
+     * @param samlDocument request or response document
+     * @param relayState used in SAML Workflow
+     * @param response Apache Catalina HTTP Response
+     * @param willSendRequest are we sending Request or Response to IDP
+     * @throws ProcessingException Exception to indicate a server processing error
+     * @throws ConfigurationException Exception indicating an issue with the configuration
+     * @throws IOException I/O exception
      */
     protected void sendHttpPostBindingRequest(String destination, Document samlDocument, String relayState, Response response,
             boolean willSendRequest) throws ProcessingException, IOException,
@@ -181,8 +181,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * assertions.
      * </p>
      *
-     * @param context
-     * @throws LifecycleException
+     * @param context Apache Catalina Context
+     * @throws LifecycleException any exception occurred while processing key provider
      */
     protected void initKeyProvider(Context context) throws LifecycleException {
         if (!doSupportSignature()) {
@@ -245,12 +245,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     /**
      * Authenticate the request
      *
-     * @param request
-     * @param response
-     * @param config
-     * @return
-     * @throws IOException
-     * @throws {@link RuntimeException} when the response is not of type catalina response object
+     * @param request Apache Catalina Request
+     * @param response Apache Catalina Response
+     * @return true if authenticated, else false
+     * @throws IOException any I/O exception
      */
     public boolean authenticate(Request request, HttpServletResponse response) throws IOException {
         if (response instanceof Response) {
@@ -355,8 +353,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * Indicates if the current request is a GlobalLogout request.
      * </p>
      *
-     * @param request
-     * @return
+     * @param request Apache Catalina Request
+     * @return true if this is a global SAML logout
      */
     private boolean isGlobalLogout(Request request) {
         String gloStr = request.getParameter(GeneralConstants.GLOBAL_LOGOUT);
@@ -368,8 +366,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * Indicates if the current request is a LocalLogout request.
      * </p>
      *
-     * @param request
-     * @return
+     * @param request Apache Catalina Request
+     * @return true if this is a local SAML logout
      */
     private boolean isLocalLogout(Request request) {
         String lloStr = request.getParameter(GeneralConstants.LOCAL_LOGOUT);
@@ -379,11 +377,11 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     /**
      * Handle the IDP Request
      *
-     * @param request
-     * @param response
-     * @param loginConfig
-     * @return
-     * @throws IOException
+     * @param request Apache Catalina Request
+     * @param response Apache Catalina Response
+     * @param loginConfig Apache Catalina Login Config
+     * @return true if processed by SAML Workflow
+     * @throws IOException any I/O error while authenticating
      */
     private boolean handleSAMLRequest(Request request, Response response, LoginConfig loginConfig) throws IOException {
         String samlRequest = request.getParameter(GeneralConstants.SAML_REQUEST_KEY);
@@ -439,11 +437,11 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     /**
      * Handle IDP Response
      *
-     * @param request
-     * @param response
-     * @param loginConfig
-     * @return
-     * @throws IOException
+     * @param request Apache Catalina Request
+     * @param response Apache Catalina Response
+     * @param loginConfig Apache Catalina Login Config
+     * @return true if logged in in SAML SP side
+     * @throws IOException any I/O error in authentication process
      */
     private boolean handleSAMLResponse(Request request, Response response, LoginConfig loginConfig) throws IOException {
         if (!super.validate(request)) {
@@ -622,11 +620,11 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     /**
      * Handle the user invocation for the first time
      *
-     * @param request
-     * @param response
-     * @param loginConfig
-     * @return
-     * @throws IOException
+     * @param request Apache Catalina Request
+     * @param response Apache Catalina Response
+     * @param loginConfig Apache Catalina Login Config
+     * @return true if logged in in SAML SP side
+     * @throws IOException any I/O error in authentication process
      */
     private boolean generalUserRequest(Request request, Response response, LoginConfig loginConfig) throws IOException {
         Session session = request.getSessionInternal(true);
@@ -700,7 +698,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * Indicates if the SP is configure with HTTP POST Binding.
      * </p>
      *
-     * @return
+     * @return true if post binding
      */
     protected boolean isHttpPostBinding() {
         return getBinding().equalsIgnoreCase("POST");
@@ -718,7 +716,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     /**
      * Subclasses need to return the context path
      * based on the capability of their servlet api
-     * @return
+     * 
+     * @return Servlet Context Path
      */
     protected abstract String getContextPath();
 
