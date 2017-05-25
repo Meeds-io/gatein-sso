@@ -343,6 +343,7 @@
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-catalina</artifactId>
         <version>${version.tomcat8}</version>
+        <scope>provided</scope>
       </dependency>
 
       <!-- Picketlink SAML -->
