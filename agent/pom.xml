@@ -83,6 +83,7 @@
       <dependency>
          <groupId>org.picketlink.distribution</groupId>
          <artifactId>picketlink-wildfly8</artifactId>
+         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.mockito</groupId>
