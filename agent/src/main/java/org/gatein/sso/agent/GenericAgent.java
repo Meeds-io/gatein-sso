@@ -23,9 +23,20 @@
 
 package org.gatein.sso.agent;
 
+import org.apache.commons.lang.StringUtils;
+import org.exoplatform.commons.utils.ListAccess;
+import org.exoplatform.commons.utils.PropertyManager;
+import org.exoplatform.services.organization.Query;
+import org.exoplatform.services.organization.User;
 import org.gatein.common.logging.Logger;
 import org.gatein.common.logging.LoggerFactory;
 import org.gatein.wci.security.Credentials;
+
+import org.exoplatform.container.ExoContainer;
+import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.container.PortalContainer;
+import org.exoplatform.container.RootContainer;
+import org.exoplatform.services.organization.OrganizationService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,9 +50,20 @@ public abstract class GenericAgent
    private static Logger log = LoggerFactory.getLogger(GenericAgent.class);
 
    public static final String AUTHENTICATED_CREDENTIALS = "authenticatedCredentials";
-   
+
+   private static final String IS_CASE_INSENSITIVE = "exo.auth.case.insensitive";
+
+
    public void saveSSOCredentials(String username, HttpServletRequest httpRequest)
    {
+      boolean case_insensitive_bool = true;
+      String case_insensitive_str = PropertyManager.getProperty(IS_CASE_INSENSITIVE);
+      if(case_insensitive_str != null) {
+         case_insensitive_bool = Boolean.valueOf(case_insensitive_str);
+      }
+      if(case_insensitive_bool) {
+         username = getUserPrincipal(username);
+      }
       //Use empty password....it shouldn't be needed...this is a SSO login. The password has
       //already been presented with the SSO server. It should not be passed around for
       //better security
@@ -54,5 +76,52 @@ public abstract class GenericAgent
 
       log.debug("Credentials of user " + username + " saved into HTTP session.");
    }
-   
+
+   /**
+    * @param username
+    * @return gets the right username if the login input contains capital letters: EXOGTN-2267
+    */
+   public String getUserPrincipal(String username) {
+      try {
+         OrganizationService organizationService =
+                 (OrganizationService) getContainer()
+                         .getComponentInstance(OrganizationService.class);
+         Query query = new Query();
+         query.setUserName(username);
+         ListAccess<User> users = organizationService.getUserHandler().findUsersByQuery(query);
+         if (users.getSize() >= 1) {
+            String loadedUsername  = "";
+            User[] listusers = users.load(0, users.getSize());
+            int found = 0;
+            for(User user : listusers){
+               if (username.equalsIgnoreCase(user.getUserName())) {
+                  loadedUsername = user.getUserName();
+                  found ++;
+               }
+            }
+            if(found == 1 && StringUtils.isNotBlank(loadedUsername))
+               username = loadedUsername;
+            else
+               log.warn("duplicate entry for user " + username);
+
+         }
+      } catch (Exception exception) {
+         log.warn("Error while retrieving user " + username + " from IDM stores " , exception);
+      }
+      return username;
+   }
+
+   /**
+    * @return Gives the {@link ExoContainer} that fits best with the current context
+    */
+   protected final ExoContainer getContainer()
+   {
+      ExoContainer container = ExoContainerContext.getCurrentContainer();
+      if (container instanceof RootContainer) {
+         container = PortalContainer.getInstance();
+      }
+      // The container is a PortalContainer or a StandaloneContainer
+      return container;
+   }
+
 }
