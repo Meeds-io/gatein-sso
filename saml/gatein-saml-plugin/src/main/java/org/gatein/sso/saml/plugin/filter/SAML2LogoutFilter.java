@@ -69,7 +69,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
                        FilterChain filterChain) throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+    request.setCharacterEncoding("UTF-8");
     if (isPortalLogoutInProgress(request)) {
       if(StringUtils.isBlank(getPortalLogoutURLFromSession(request))) {
         // Step 1 : Begin -  call logout action
