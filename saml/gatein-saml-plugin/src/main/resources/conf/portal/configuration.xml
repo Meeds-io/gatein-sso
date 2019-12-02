@@ -70,7 +70,7 @@
         </value-param>
         <value-param>
           <name>CONFIG_FILE</name>
-          <value>${gatein.sso.saml.config.file}</value>
+          <value>${exo.conf.dir}/saml2/picketlink-sp.xml</value>
         </value-param>
         <value-param>
           <name>IGNORE_SIGNATURES</name>
