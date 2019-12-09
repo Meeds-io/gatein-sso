@@ -29,90 +29,57 @@
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
+      <scope>provided</scope>
     </dependency>
 		<dependency>
 			<groupId>org.exoplatform.core</groupId>
 			<artifactId>exo.core.component.organization.api</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.gatein.wci</groupId>
 			<artifactId>wci-wci</artifactId>
+      <scope>provided</scope>
 		</dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-logging</artifactId>
-          <groupId>commons-logging</groupId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
     </dependency>
 		<dependency>
 			<groupId>org.jasig.cas.client</groupId>
 			<artifactId>cas-client-core</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-agent</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging-api</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-servlet-agent</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-agent-shared</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-protocol-client</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.axis</groupId>
-          <artifactId>axis-ant</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
 		</dependency>
     <dependency>
       <groupId>org.jboss.security</groupId>
       <artifactId>jboss-negotiation-spnego</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.web</groupId>
-          <artifactId>jbossweb</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.picketlink</groupId>
       <artifactId>picketlink-federation</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>provided</scope>
     </dependency>
     <dependency>
        <groupId>org.picketlink.distribution</groupId>
@@ -122,6 +89,7 @@
     <dependency>
        <groupId>org.mockito</groupId>
        <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

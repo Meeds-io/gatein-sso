@@ -20,10 +20,12 @@
     <dependency>
       <groupId>org.exoplatform.gatein.sso</groupId>
       <artifactId>sso-agent</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
