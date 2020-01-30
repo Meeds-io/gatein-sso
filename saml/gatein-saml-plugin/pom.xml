@@ -15,6 +15,11 @@
 
    <dependencies>
       <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-catalina</artifactId>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
          <groupId>org.apache.httpcomponents</groupId>
          <artifactId>httpclient</artifactId>
       </dependency>
@@ -40,10 +45,6 @@
          <artifactId>wildfly-undertow</artifactId>
       </dependency>
       <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-catalina</artifactId>
-      </dependency>
-      <dependency>
          <groupId>javax.servlet</groupId>
          <artifactId>javax.servlet-api</artifactId>
       </dependency>
@@ -64,6 +65,10 @@
       <dependency>
          <groupId>org.exoplatform.gatein.sso</groupId>
          <artifactId>sso-agent</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.picketlink</groupId>
+        <artifactId>picketlink-federation</artifactId>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>

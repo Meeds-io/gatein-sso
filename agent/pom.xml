@@ -24,83 +24,83 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
 		</dependency>
-        <dependency>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-catalina</artifactId>
-        </dependency>
-
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <scope>provided</scope>
+    </dependency>
 		<dependency>
 			<groupId>org.exoplatform.core</groupId>
 			<artifactId>exo.core.component.organization.api</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.gatein.wci</groupId>
 			<artifactId>wci-wci</artifactId>
+      <scope>provided</scope>
 		</dependency>
-
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
+      <scope>provided</scope>
     </dependency>
-
 		<dependency>
 			<groupId>org.jasig.cas.client</groupId>
 			<artifactId>cas-client-core</artifactId>
+      <scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-agent</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-servlet-agent</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-agent-shared</artifactId>
+      <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.josso</groupId>
 			<artifactId>josso-protocol-client</artifactId>
+      <scope>provided</scope>
 		</dependency>
-      <dependency>
-        <groupId>org.jboss.security</groupId>
-        <artifactId>jboss-negotiation-spnego</artifactId>
-        <exclusions>
-          <exclusion>
-            <groupId>org.jboss.web</groupId>
-            <artifactId>jbossweb</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-
-      <dependency>
-         <groupId>org.picketlink</groupId>
-         <artifactId>picketlink-federation</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.picketlink.distribution</groupId>
-         <artifactId>picketlink-wildfly8</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.mockito</groupId>
-         <artifactId>mockito-core</artifactId>
-      </dependency>
-
+    <dependency>
+      <groupId>org.jboss.security</groupId>
+      <artifactId>jboss-negotiation-spnego</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.picketlink</groupId>
+      <artifactId>picketlink-federation</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+       <groupId>org.picketlink.distribution</groupId>
+       <artifactId>picketlink-wildfly8</artifactId>
+       <scope>provided</scope>
+    </dependency>
+    <dependency>
+       <groupId>org.mockito</groupId>
+       <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-      <dependency>
-         <groupId>org.slf4j</groupId>
-         <artifactId>slf4j-log4j12</artifactId>
-         <scope>test</scope>
-      </dependency>
-
+    <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-log4j12</artifactId>
+       <scope>test</scope>
+    </dependency>
 	</dependencies>
 
 	<build>
