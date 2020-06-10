@@ -9,7 +9,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +27,16 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.exoplatform.container.ExoContainer;
+import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.container.PortalContainer;
+import org.exoplatform.container.RootContainer;
+import org.exoplatform.services.organization.Membership;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.security.IdentityRegistry;
+import org.exoplatform.services.security.MembershipEntry;
+import org.exoplatform.services.security.MembershipHashSet;
+import org.exoplatform.services.security.RolesExtractor;
 import org.picketlink.common.ErrorCodes;
 import org.picketlink.common.constants.GeneralConstants;
 import org.picketlink.common.constants.JBossSAMLConstants;
@@ -65,7 +77,7 @@ import org.w3c.dom.Element;
 public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator {
 
     protected boolean jbossEnv = false;
-
+    
     public AbstractSPFormAuthenticator() {
         super();
         ServerDetector detector = new ServerDetector();
@@ -501,12 +513,15 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
                 // We got a response with the principal
                 List<String> roles = saml2HandlerResponse.getRoles();
-                if (principal == null)
+                
+                if (principal == null) {
                     principal = (Principal) session.getSession().getAttribute(GeneralConstants.PRINCIPAL_ID);
-
+                }
+    
                 String username = principal.getName();
                 String password = ServiceProviderSAMLContext.EMPTY_PASSWORD;
-
+    
+                roles.addAll(extractGateinRoles(username));
                 if (logger.isTraceEnabled()) {
                     logger.trace("Roles determined for username=" + username + "=" + Arrays.toString(roles.toArray()));
                 }
@@ -691,6 +706,31 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
         }
 
         return localAuthentication(request, response, loginConfig);
+    }
+    
+    /**
+     * Extract Gatein roles to put in Principal
+     * @param userId
+     * @return
+     */
+    private List<String> extractGateinRoles(String userId) {
+        OrganizationService organizationService =
+            PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+        RolesExtractor rolesExtractor=PortalContainer.getInstance().getComponentInstanceOfType(RolesExtractor.class);
+        List<String> result = new ArrayList<>();
+        Set<MembershipEntry> entries = new MembershipHashSet();
+        Collection<Membership> memberships;
+        try {
+            memberships = organizationService.getMembershipHandler().findMembershipsByUser(userId);
+        } catch (Exception e) {
+            memberships = null;
+        }
+        if (memberships != null) {
+            for (Membership membership : memberships)
+                entries.add(new MembershipEntry(membership.getGroupId(), membership.getMembershipType()));
+        }
+        result.addAll(rolesExtractor.extractRoles(userId, entries));
+        return result;
     }
 
     /**
