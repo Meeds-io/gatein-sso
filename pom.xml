@@ -99,7 +99,7 @@
     <version.tomcat8>8.5.13</version.tomcat8>
 
     <!-- Wildfly undertow -->
-    <version.wildfly.undertow>10.1.0.Final</version.wildfly.undertow>
+    <version.wildfly.undertow>12.0.0.Final</version.wildfly.undertow>
 
     <version.org.jboss.jandex>1.0.3.Final</version.org.jboss.jandex>
 
