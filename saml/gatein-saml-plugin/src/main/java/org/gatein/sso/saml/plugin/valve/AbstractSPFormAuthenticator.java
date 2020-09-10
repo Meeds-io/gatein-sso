@@ -762,6 +762,13 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     protected abstract String getContextPath();
 
     protected Principal getGenericPrincipal(Request request, String username, List<String> roles){
+        //sometimes, IDP send username in assertion with capitals letters, or with inconsistent format.
+        //this option allows to force the username in lower case, just before creating the principal,
+        //so that, all operations in exo side will use a consistant format.
+        String forceLowerCase = System.getProperty("gatein.sso.saml.username.forcelowercase","false");
+        if(forceLowerCase.equalsIgnoreCase("true")) {
+            username=username.toLowerCase();
+        }
         return new GenericPrincipal(username, null, roles);
     }
 
