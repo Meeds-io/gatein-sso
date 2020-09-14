@@ -1,0 +1,9 @@
+2020-09-14 eXo Support <support@exoplatform.org>  
+
+# 6.0.0 Patches changelog:
+
+ 
+
+* 2020-09-14: Patch-6.0.0:1, Author: Jihed Chabbeh<jchabbeh@exoplatform.com>
+
+  -  https://github.com/Meeds-io/gatein-sso/commit/71682632c044c7c22df62445b301ab2ddc7ac720
