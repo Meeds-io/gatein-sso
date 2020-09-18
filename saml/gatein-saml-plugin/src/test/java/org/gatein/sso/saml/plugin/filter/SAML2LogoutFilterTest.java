@@ -76,7 +76,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(request.getRequestURI()).thenReturn("/portal");
     when(httpSession.getAttribute(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE)).thenReturn("/portal?portal:action=Logout");
     when(request.getRemoteUser()).thenReturn("root");
-    when(request.getQueryString()).thenReturn("/portal?portal:action=Logout");
+    when(request.getQueryString()).thenReturn("");
     when(request.getSession()).thenReturn(httpSession);
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
@@ -95,7 +95,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     saml2LogoutFilter.init(filterConfig);
     saml2LogoutFilter.doFilter(request, response, chain);
 
-    verify(response, VerificationModeFactory.times(0)).sendRedirect(eq("/portal?portal:action=Logout"));
+    verify(response, VerificationModeFactory.times(1)).sendRedirect(eq("/portal?portal:action=Logout"));
   }
 
   public void testLogoutProcessStep3AndStep4() throws Exception {
