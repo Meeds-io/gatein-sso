@@ -76,7 +76,6 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(request.getRequestURI()).thenReturn("/portal");
     when(httpSession.getAttribute(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE)).thenReturn("/portal?portal:action=Logout");
     when(request.getRemoteUser()).thenReturn("root");
-    when(request.getQueryString()).thenReturn("");
     when(request.getSession()).thenReturn(httpSession);
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
