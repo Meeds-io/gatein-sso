@@ -112,18 +112,12 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
   }
 
   public static boolean isPortalLogoutInProgress(HttpServletRequest request) {
-    if (StringUtils.equals(request.getParameter("portal:action"), "Logout") && request.getRemoteUser() != null) {
-      return true;
-    }
-    return false;
+    return request.getQueryString() != null && request.getQueryString().contains("portal:action=Logout") && request.getRemoteUser() != null;
   }
 
   public static boolean isSAMLLogoutInProgress(HttpServletRequest request) {
-    if (request.getRemoteUser() != null && StringUtils.isNotBlank(getPortalLogoutURLFromSession(request))
-        && !StringUtils.equals(getPortalLogoutURLFromSession(request), "DONE")) {
-      return true;
-    }
-    return false;
+    return request.getRemoteUser() != null && StringUtils.isNotBlank(getPortalLogoutURLFromSession(request))
+            && !StringUtils.equals(getPortalLogoutURLFromSession(request), "DONE");
   }
 
   /**
