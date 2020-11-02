@@ -60,11 +60,11 @@
     <maven.compiler.source>1.8</maven.compiler.source>
 
     <!-- exo -->
-    <org.exoplatform.core.version>6.1.x-SNAPSHOT</org.exoplatform.core.version>
+    <org.exoplatform.core.version>6.1.0-02112020</org.exoplatform.core.version>
     <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
-    <org.exoplatform.ws.version>6.1.x-SNAPSHOT</org.exoplatform.ws.version>
-    <org.exoplatform.gatein.wci.version>6.1.x-SNAPSHOT</org.exoplatform.gatein.wci.version>
-    <org.exoplatform.gatein.dep.version>2.1.x-SNAPSHOT</org.exoplatform.gatein.dep.version>
+    <org.exoplatform.ws.version>6.1.0-02112020</org.exoplatform.ws.version>
+    <org.exoplatform.gatein.wci.version>6.1.0-02112020</org.exoplatform.gatein.wci.version>
+    <org.exoplatform.gatein.dep.version>2.1.0-02112020</org.exoplatform.gatein.dep.version>
 
     <!-- logging -->
     <version.commons-logging>1.1.1</version.commons-logging>
