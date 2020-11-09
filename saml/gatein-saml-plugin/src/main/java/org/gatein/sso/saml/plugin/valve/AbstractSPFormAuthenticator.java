@@ -382,6 +382,13 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
      * @return true if this is a local SAML logout
      */
     private boolean isLocalLogout(Request request) {
+        try {
+            if (request.getCharacterEncoding()==null) {
+                request.setCharacterEncoding("UTF-8");
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String lloStr = request.getParameter(GeneralConstants.LOCAL_LOGOUT);
         return isNotNull(lloStr) && "true".equalsIgnoreCase(lloStr);
     }
