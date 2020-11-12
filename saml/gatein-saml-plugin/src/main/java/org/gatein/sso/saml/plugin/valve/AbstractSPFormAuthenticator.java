@@ -387,7 +387,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
                 request.setCharacterEncoding("UTF-8");
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("Request have no encoding, and we are unable to set it to UTF-8");
+            logger.error(e);
         }
         String lloStr = request.getParameter(GeneralConstants.LOCAL_LOGOUT);
         return isNotNull(lloStr) && "true".equalsIgnoreCase(lloStr);
