@@ -2,7 +2,7 @@
    <parent>
       <artifactId>sso-josso-parent</artifactId>
       <groupId>org.exoplatform.gatein.sso</groupId>
-      <version>6.2.x-SNAPSHOT</version>
+      <version>6.2.0-2021012601</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
