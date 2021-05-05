@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <parent>
+      <artifactId>sso-josso-parent</artifactId>
+      <groupId>org.exoplatform.gatein.sso</groupId>
+      <version>6.2.x-rewards-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+
+   <artifactId>sso-agent-josso182</artifactId>
+   <packaging>jar</packaging>
+
+   <name>GateIn JOSSO agent for JOSSO 1.8.2 and newer</name>
+
+   <dependencies>
+     <dependency>
+       <groupId>org.josso</groupId>
+       <artifactId>josso-agents-bin</artifactId>
+     </dependency>
+     <dependency>
+       <groupId>org.josso</groupId>
+       <artifactId>josso-agent-shared</artifactId>
+     </dependency>
+     <dependency>
+       <groupId>org.exoplatform.gatein.sso</groupId>
+       <artifactId>sso-agent</artifactId>
+     </dependency>
+      <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>javax.servlet-api</artifactId>
+         <scope>provided</scope>
+      </dependency>
+   </dependencies>
+
+</project>
