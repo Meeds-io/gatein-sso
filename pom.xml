@@ -8,24 +8,26 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>maven-parent-pom</artifactId>
+    <groupId>org.exoplatform</groupId>
+    <version>23-M06</version>
+    <relativePath />
+  </parent>
+
   <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
   <version>6.2.x-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <parent>
-    <groupId>org.gatein</groupId>
-    <artifactId>gatein-parent</artifactId>
-    <version>1.3.0.Final</version>
-  </parent>
 
   <name>Gatein - Single Sign On Integration</name>
   <description>GateIn Single Sign On Integration</description>
 
   <scm>
-    <connection>scm:git:git://github.com/exoplatform/gatein-sso.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/exoplatform/gatein-sso.git</developerConnection>
-    <url>https://github.com/exoplatform/gatein-sso</url>
+    <connection>scm:git:git://github.com/meeds-io/gatein-sso.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/meeds-io/gatein-sso.git</developerConnection>
+    <url>https://github.com/meeds-io/gatein-sso</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -33,8 +35,6 @@
     <module>agent</module>
     <module>auth-callback</module>
     <module>common-plugin</module>
-    <module>cas</module>
-    <module>josso</module>
     <module>opensso</module>
     <module>spnego</module>
     <module>spnegosso</module>
@@ -44,75 +44,7 @@
   </modules>
 
   <properties>
-    <!-- ***************** -->
-    <!-- Repository Deployment URLs for eXo -->
-    <!-- ***************** -->
-    <jboss.releases.repo.url>http://repository.exoplatform.org/service/local/staging/deploy/maven2/</jboss.releases.repo.url>
-    <jboss.snapshots.repo.url>http://repository.exoplatform.org/content/repositories/exo-snapshots/</jboss.snapshots.repo.url>
-
-    <!-- Config for eXo Release Manager-->
-    <useReleaseProfile>false</useReleaseProfile>
-    <version.release.plugin>2.5.1</version.release.plugin>
-    <pushChanges>false</pushChanges>
-    <autoVersionSubmodules>true</autoVersionSubmodules>
-
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-
-    <!-- exo -->
-    <org.exoplatform.core.version>6.2.x-SNAPSHOT</org.exoplatform.core.version>
-    <javax.servlet.api.version>3.1.0</javax.servlet.api.version>
     <org.exoplatform.ws.version>6.2.x-SNAPSHOT</org.exoplatform.ws.version>
-    <org.exoplatform.gatein.wci.version>6.2.x-SNAPSHOT</org.exoplatform.gatein.wci.version>
-    <org.exoplatform.gatein.dep.version>2.2.x-SNAPSHOT</org.exoplatform.gatein.dep.version>
-
-    <!-- logging -->
-    <version.commons-logging>1.1.1</version.commons-logging>
-
-    <!-- cas -->
-    <version.cas>3.5.0</version.cas>
-
-    <!-- cas 4 -->
-    <version.cas4>4.0.0</version.cas4>
-
-    <!-- josso -->
-    <version.josso>1.8.5</version.josso>
-
-    <!-- xbean -->
-    <version.xbean>3.4.3</version.xbean>
-
-    <!-- spring -->
-    <version.spring>2.5.6.SEC03</version.spring>
-
-    <version.atricore>1.2.2</version.atricore>
-
-    <!-- commons discovery -->
-    <version.commons.discovery>0.2</version.commons.discovery>
-
-    <!-- apache axis -->
-    <version.axis>1.4</version.axis>
-
-    <!--  SPNEGO support using JBoss Negotiation -->
-    <version.jboss.negotiation>2.2.5.Final</version.jboss.negotiation>
-
-    <!-- Tomcat 8 -->
-    <version.tomcat8>8.5.13</version.tomcat8>
-
-    <!-- Wildfly undertow -->
-    <version.wildfly.undertow>10.1.0.Final</version.wildfly.undertow>
-
-    <version.org.jboss.jandex>1.0.3.Final</version.org.jboss.jandex>
-
-    <!-- maven-release-plugin -->
-    <useReleaseProfile>false</useReleaseProfile>
-    <version.release.plugin>2.2.1</version.release.plugin>
-    <pushChanges>false</pushChanges>
-
-    <!-- buildnumber-maven-plugin : needs 1.0 for git -->
-    <version.buildnumber.plugin>1.0</version.buildnumber.plugin>
-
-    <!-- PicketLink SAML -->
-    <version.picketlink.fed>2.5.5.Final</version.picketlink.fed>
   </properties>
 
   <dependencyManagement>
@@ -120,9 +52,9 @@
 
       <!-- Import dependency management configuration -->
       <dependency>
-        <groupId>org.exoplatform.gatein</groupId>
-        <artifactId>gatein-dep</artifactId>
-        <version>${org.exoplatform.gatein.dep.version}</version>
+        <groupId>org.exoplatform.ws</groupId>
+        <artifactId>ws-parent</artifactId>
+        <version>${org.exoplatform.ws.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -150,41 +82,6 @@
       </dependency>
       <dependency>
         <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-cas-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-cas4-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-josso-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-agent-josso181</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-agent-josso182</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-josso-181</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-josso-182</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-opensso-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -198,257 +95,6 @@
         <artifactId>sso-saml-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
-
-      <!-- cas -->
-      <dependency>
-        <groupId>org.jasig.cas</groupId>
-        <artifactId>cas-server-core</artifactId>
-        <version>${version.cas}</version>
-      </dependency>
-
-      <!-- josso -->
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-core</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-basic-authscheme</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-agent</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-agent-shared</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-agents-bin</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-servlet-agent</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-protocol-client</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.josso</groupId>
-        <artifactId>josso-common</artifactId>
-        <version>${version.josso}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.xbean</groupId>
-        <artifactId>xbean-spring</artifactId>
-        <version>${version.xbean}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-
-      <!-- JOSSO2 -->
-      <dependency>
-        <groupId>org.atricore.idbus.kernel</groupId>
-        <artifactId>org.atricore.idbus.kernel.main</artifactId>
-        <version>${version.atricore}</version>
-      </dependency>
-
-      <!-- Spring (needed for JOSSO -->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-beans</artifactId>
-        <version>${version.spring}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${version.spring}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-core</artifactId>
-        <version>${version.spring}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>commons-discovery</groupId>
-        <artifactId>commons-discovery</artifactId>
-        <version>${version.commons.discovery}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.axis</groupId>
-        <artifactId>axis</artifactId>
-        <version>${version.axis}</version>
-      </dependency>
-
-      <!-- exo -->
-      <dependency>
-        <groupId>org.exoplatform.ws</groupId>
-        <artifactId>exo.ws.rest.core</artifactId>
-        <version>${org.exoplatform.ws.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.core</groupId>
-        <artifactId>exo.core.component.security.core</artifactId>
-        <version>${org.exoplatform.core.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.core</groupId>
-        <artifactId>exo.core.component.organization.api</artifactId>
-        <version>${org.exoplatform.core.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.wci</groupId>
-        <artifactId>wci-wci</artifactId>
-        <version>${org.exoplatform.gatein.wci.version}</version>
-      </dependency>
-
-
-      <!-- SPNEGO support using JBoss Negotiation -->
-      <dependency>
-        <groupId>org.jboss.security</groupId>
-        <artifactId>jboss-negotiation-spnego</artifactId>
-        <version>${version.jboss.negotiation}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.security</groupId>
-        <artifactId>jboss-negotiation-common</artifactId>
-        <version>${version.jboss.negotiation}</version>
-      </dependency>
-
-      <!-- Wildfly Undertow -->
-      <dependency>
-        <groupId>org.wildfly</groupId>
-        <artifactId>wildfly-undertow</artifactId>
-        <version>${version.wildfly.undertow}</version>
-        <scope>provided</scope>
-      </dependency>
-
-      <!-- Tomcat 8 -->
-      <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-catalina</artifactId>
-        <version>${version.tomcat8}</version>
-        <scope>provided</scope>
-      </dependency>
-
-      <!-- Picketlink SAML -->
-      <dependency>
-         <groupId>org.picketlink</groupId>
-         <artifactId>picketlink-federation</artifactId>
-        <version>${version.picketlink.fed}</version>
-      </dependency>
-      <dependency>
-         <groupId>org.picketlink.distribution</groupId>
-         <artifactId>picketlink-wildfly8</artifactId>
-        <version>${version.picketlink.fed}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.picketlink</groupId>
-         <artifactId>picketlink-common</artifactId>
-        <version>${version.picketlink.fed}</version>
-      </dependency>
-      <dependency>
-         <groupId>org.picketlink</groupId>
-         <artifactId>picketlink-config</artifactId>
-        <version>${version.picketlink.fed}</version>
-      </dependency>
-
-      <!-- SSO plugins -->
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>${version.commons-logging}</version>
-      </dependency>
-
-      <dependency>
-         <groupId>javax.servlet</groupId>
-         <artifactId>javax.servlet-api</artifactId>
-        <version>${javax.servlet.api.version}</version>
-      </dependency>
-
     </dependencies>
   </dependencyManagement>
-
-  <build>
-    <!-- Set plugin versions here -->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2-beta-5</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.3.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.xbean</groupId>
-          <artifactId>maven-xbean-plugin</artifactId>
-          <version>${version.xbean}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.4.2</version>
-          <dependencies>
-              <dependency>
-                  <groupId>org.apache.maven.scm</groupId>
-                  <artifactId>maven-scm-provider-gitexe</artifactId>
-                  <version>1.9</version>
-              </dependency>
-          </dependencies>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <fork>true</fork>
-          <meminitial>256m</meminitial>
-          <maxmem>1024m</maxmem>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <tags>
-            <tag>
-              <name>org.apache.xbean.XBean</name>
-              <placement>a</placement>
-              <head>org.apache.xbean.XBean annotation</head>
-            </tag>
-          </tags>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </build>
 </project>

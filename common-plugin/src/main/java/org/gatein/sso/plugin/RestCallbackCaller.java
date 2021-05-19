@@ -32,17 +32,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 /**
- * Object, which runs on SSO server side (JOSSO, CAS, OpenAM) and is used to help with connection to GateIn via REST
+ * Object, which runs on SSO server side (CAS, OpenAM) and is used to help with connection to GateIn via REST
  *
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 public class RestCallbackCaller
 {
-   private static final Log log = LogFactory.getLog(RestCallbackCaller.class);
+   private static final Log log = ExoLogger.getLogger(RestCallbackCaller.class);
 
    private static final String ENCODING_CHARSET = "UTF-8";
 

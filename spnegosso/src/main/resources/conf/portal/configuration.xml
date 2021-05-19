@@ -26,7 +26,7 @@
   <external-component-plugins>
     <target-component>org.gatein.sso.integration.SSOFilterIntegrator</target-component>
     <component-plugin>
-      <name>InitiateLoginFilter</name>
+      <name>SSOFilterIntegratorPlugin</name>
       <set-method>addPlugin</set-method>
       <type>org.gatein.sso.integration.SSOFilterIntegratorPlugin</type>
       <init-params>

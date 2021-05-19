@@ -82,7 +82,7 @@ public abstract class AbstractLogoutFilter extends AbstractSSOInterceptor
 		}
         // This means that we returned from SSO logout, but we need to redirect request to portal logout URI (something like
         // /portal/classic/home?portal:componentId=UIPortal&portal:action=Logout) because current request is not logout request
-        // This can happen with some SSO servers, which doesn't redirect to logout URL (CAS or JOSSO 2.2)
+        // This can happen with some SSO servers, which doesn't redirect to logout URL (CAS)
         else if (httpRequest.getSession().getAttribute(SSO_LOGOUT_FLAG) != null)
         {
             // Restore previously saved logout URI

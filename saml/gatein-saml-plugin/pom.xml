@@ -13,7 +13,16 @@
 
    <name>GateIn SSO - SAML Identity provider plugin</name>
 
+   <properties>
+     <exo.test.coverage.ratio>0.07</exo.test.coverage.ratio>
+   </properties>
+
    <dependencies>
+      <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging</artifactId>
+        <scope>provided</scope>
+      </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-catalina</artifactId>
@@ -39,10 +48,6 @@
       <dependency>
          <groupId>org.picketlink</groupId>
          <artifactId>picketlink-config</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.wildfly</groupId>
-         <artifactId>wildfly-undertow</artifactId>
       </dependency>
       <dependency>
          <groupId>javax.servlet</groupId>

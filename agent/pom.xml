@@ -11,20 +11,14 @@
 	<packaging>jar</packaging>
 	<name>GateIn SSO - Agent</name>
 
-	<properties>
-		<!-- ChangeMe to your specific local environment -->
-		<gatein.location>/home/soshah/projects/gatein/portal/trunk/packaging/pkg/target/jboss/server/gatein-spnego</gatein.location>
+  <properties>
+    <exo.test.coverage.ratio>0.18</exo.test.coverage.ratio>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.exoplatform.gatein.sso</groupId>
 			<artifactId>sso-auth-callback</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
 		</dependency>
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -46,31 +40,6 @@
       <artifactId>httpclient</artifactId>
       <scope>provided</scope>
     </dependency>
-		<dependency>
-			<groupId>org.jasig.cas.client</groupId>
-			<artifactId>cas-client-core</artifactId>
-      <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.josso</groupId>
-			<artifactId>josso-agent</artifactId>
-      <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.josso</groupId>
-			<artifactId>josso-servlet-agent</artifactId>
-      <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.josso</groupId>
-			<artifactId>josso-agent-shared</artifactId>
-      <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.josso</groupId>
-			<artifactId>josso-protocol-client</artifactId>
-      <scope>provided</scope>
-		</dependency>
     <dependency>
       <groupId>org.jboss.security</groupId>
       <artifactId>jboss-negotiation-spnego</artifactId>
@@ -112,30 +81,15 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.xbean</groupId>
-				<artifactId>maven-xbean-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<namespace>urn:org:josso:agent:generic-servlet:${project.version}</namespace>
-						</configuration>
-						<goals>
-							<goal>mapping</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
-
 
 	<!--
 		profile for packaging and deploying this plugin into a cas server
 	-->
 	<profiles>
 		<profile>
-			<id>integration-tests</id>
+			<id>run-its</id>
 			<build>
 				<plugins>
 					<plugin>

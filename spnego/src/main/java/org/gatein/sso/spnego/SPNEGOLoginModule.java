@@ -93,7 +93,6 @@ public class SPNEGOLoginModule extends org.jboss.security.negotiation.spnego.SPN
    /**
     * Obtaining identity from subject. We need to find instance of {@link UserPrincipal}
     * , which is added here during FORM authentication.
-    * See {@link org.exoplatform.services.security.j2ee.JbossLoginModule#commit()}
     *
     * @param userSubject subject from FORM authentication
     * @return identity

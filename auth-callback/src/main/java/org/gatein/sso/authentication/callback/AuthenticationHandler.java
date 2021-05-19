@@ -50,7 +50,7 @@ import org.gatein.common.logging.LoggerFactory;
 import java.util.Collection;
 
 /**
- * This is a RESTful component that is invoked by central SSO servers like CAS server, JOSSO server etc, to invoke
+ * This is a RESTful component that is invoked by central SSO servers like CAS server, to invoke
  * Gatein authentication related queries during their own "Authentication process"
  * 
  * 

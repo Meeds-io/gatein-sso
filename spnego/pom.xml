@@ -11,11 +11,6 @@
 	<packaging>jar</packaging>
 	<name>GateIn SPNEGO LoginModule based on JBoss Negotiation</name>
 
-	<properties>
-		<!-- ChangeMe to your specific local environment -->
-		<gatein.location>/home/soshah/projects/gatein/portal/trunk/packaging/pkg/target/jboss/server/gatein-spnego</gatein.location>
-	</properties>
-
 	<dependencies>	
 		<dependency>
 			<groupId>org.exoplatform.core</groupId>
@@ -40,7 +35,7 @@
 	-->
 	<profiles>
 		<profile>
-			<id>integration-tests</id>
+			<id>run-its</id>
 			<build>
 				<plugins>
 					<plugin>

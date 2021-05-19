@@ -41,7 +41,7 @@ import org.exoplatform.services.organization.OrganizationService;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Base agent superclass used by other SSO agents (CAS, JOSSO, OpenAM)
+ * Base agent superclass used by other SSO agents (CAS, OpenAM)
  *
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */

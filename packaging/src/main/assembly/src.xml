@@ -1,5 +1,6 @@
-<assembly>
-
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+  <id>gatein-sso</id>
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <formats>
@@ -8,23 +9,11 @@
 
   <fileSets>
     <fileSet>
-      <directory>../cas/gatein-cas4-portal/target/sso-cas4-pkg-${version}/</directory>
-      <outputDirectory>gatein-sso-${version}/cas4</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>../cas/gatein-cas-portal/target/sso-cas-pkg-${version}/</directory>
-      <outputDirectory>gatein-sso-${version}/cas</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>../josso/gatein-josso-portal/target/sso-josso-pkg-${version}/</directory>
-      <outputDirectory>gatein-sso-${version}/josso</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>../opensso/gatein-opensso-portal/target/sso-opensso-pkg-${version}/</directory>
+      <directory>../opensso/gatein-opensso-portal/target/sso-opensso-pkg-${version}-sso-opensso/</directory>
       <outputDirectory>gatein-sso-${version}/opensso</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>../saml/gatein-saml-portal/target/sso-saml-pkg-${version}/</directory>
+      <directory>../saml/gatein-saml-portal/target/sso-saml-pkg-${version}-sso-saml/</directory>
       <outputDirectory>gatein-sso-${version}/saml</outputDirectory>
     </fileSet>
     <fileSet>
