@@ -44,7 +44,7 @@
   </modules>
 
   <properties>
-    <org.exoplatform.ws.version>6.2.x-SNAPSHOT</org.exoplatform.ws.version>
+    <org.exoplatform.ws.version>6.2.0-20210617</org.exoplatform.ws.version>
   </properties>
 
   <dependencyManagement>
