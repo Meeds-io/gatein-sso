@@ -6,31 +6,32 @@
     property for the specific version - add a dependency in the
     dependencyManagement section which refers to the property
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>maven-parent-pom</artifactId>
     <groupId>org.exoplatform</groupId>
     <version>23-M12</version>
-    <relativePath />
+    <relativePath/>
   </parent>
-
+  
   <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
   <version>6.2.x-SNAPSHOT</version>
   <packaging>pom</packaging>
-
-
+  
+  
   <name>Gatein - Single Sign On Integration</name>
   <description>GateIn Single Sign On Integration</description>
-
+  
   <scm>
     <connection>scm:git:git://github.com/meeds-io/gatein-sso.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/meeds-io/gatein-sso.git</developerConnection>
     <url>https://github.com/meeds-io/gatein-sso</url>
     <tag>HEAD</tag>
   </scm>
-
+  
   <modules>
     <module>agent</module>
     <module>auth-callback</module>
@@ -42,16 +43,16 @@
     <module>packaging</module>
     <module>integration</module>
   </modules>
-
+  
   <properties>
     <org.exoplatform.ws.version>6.2.x-SNAPSHOT</org.exoplatform.ws.version>
-      <!-- Sonar properties -->
-      <sonar.organization>meeds-io</sonar.organization>
+    <!-- Sonar properties -->
+    <sonar.organization>meeds-io</sonar.organization>
   </properties>
-
+  
   <dependencyManagement>
     <dependencies>
-
+      
       <!-- Import dependency management configuration -->
       <dependency>
         <groupId>org.exoplatform.ws</groupId>
@@ -60,7 +61,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
+      
       <!-- internal -->
       <dependency>
         <groupId>org.exoplatform.gatein.sso</groupId>
@@ -100,32 +101,32 @@
     </dependencies>
   </dependencyManagement>
   <!-- This profile is used to allow github action to build branches. The github action is used for sonar analysis -->
-   <profiles>
-      <profile>
-         <id>project-repositories</id>
-         <activation>
-            <property>
-               <name>!skip-project-repositories</name>
-            </property>
-         </activation>
-         <repositories>
-            <repository>
-               <snapshots>
-                  <enabled>true</enabled>
-               </snapshots>
-               <id>repository.exoplatform.org</id>
-               <url>https://repository.exoplatform.org/public</url>
-            </repository>
-         </repositories>
-         <pluginRepositories>
-            <pluginRepository>
-               <snapshots>
-                  <enabled>true</enabled>
-               </snapshots>
-               <id>repository.exoplatform.org</id>
-               <url>https://repository.exoplatform.org/public</url>
-            </pluginRepository>
-         </pluginRepositories>
-      </profile>
-   </profiles>
+  <profiles>
+    <profile>
+      <id>project-repositories</id>
+      <activation>
+        <property>
+          <name>!skip-project-repositories</name>
+        </property>
+      </activation>
+      <repositories>
+        <repository>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>repository.exoplatform.org</id>
+          <url>https://repository.exoplatform.org/public</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>repository.exoplatform.org</id>
+          <url>https://repository.exoplatform.org/public</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
 </project>
