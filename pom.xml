@@ -6,19 +6,18 @@
     property for the specific version - add a dependency in the
     dependencyManagement section which refers to the property
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>maven-parent-pom</artifactId>
     <groupId>org.exoplatform</groupId>
     <version>24-M02</version>
-    <relativePath/>
+    <relativePath />
   </parent>
   
   <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
-  <version>6.3.x-SNAPSHOT</version>
+  <version>6.3.0-20210922</version>
   <packaging>pom</packaging>
   
   
@@ -29,7 +28,7 @@
     <connection>scm:git:git://github.com/meeds-io/gatein-sso.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/meeds-io/gatein-sso.git</developerConnection>
     <url>https://github.com/meeds-io/gatein-sso</url>
-    <tag>HEAD</tag>
+    <tag>6.3.0-20210922</tag>
   </scm>
   
   <modules>
