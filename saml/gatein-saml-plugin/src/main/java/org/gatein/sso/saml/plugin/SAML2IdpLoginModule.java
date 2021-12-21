@@ -28,8 +28,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
 import org.gatein.sso.plugin.RestCallbackCaller;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
@@ -70,7 +71,7 @@ public class SAML2IdpLoginModule implements LoginModule
    // HTTP method ("POST" or "GET") which will be used to send REST callback requests
    private static final String OPTION_HTTP_METHOD = "httpMethod";
 
-   private static Logger log = Logger.getLogger(SAML2IdpLoginModule.class);
+   private static Log           log                      = ExoLogger.getLogger(SAML2IdpLoginModule.class);
 
    private Subject subject;
    private CallbackHandler callbackHandler;
