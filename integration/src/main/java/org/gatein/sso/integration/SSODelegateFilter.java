@@ -24,8 +24,8 @@
 package org.gatein.sso.integration;
 
 import org.exoplatform.container.web.AbstractFilter;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 
 import javax.servlet.FilterChain;
@@ -47,7 +47,7 @@ public class SSODelegateFilter extends AbstractFilter
 {
    private volatile Map<SSOInterceptor, String> ssoInterceptors;
 
-   private static final Logger log = LoggerFactory.getLogger(SSODelegateFilter.class);
+   private static final Log                    log = ExoLogger.getLogger(SSODelegateFilter.class);
 
    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
    {

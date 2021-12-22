@@ -23,8 +23,8 @@
 
 package org.gatein.sso.integration;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -40,7 +40,7 @@ import java.util.StringTokenizer;
  */
 public class SSOUtils
 {
-   private static final Logger log = LoggerFactory.getLogger(SSOUtils.class);
+  private static final Log log = ExoLogger.getLogger(SSOUtils.class);
    private static boolean ssoEnabled;
 
    static

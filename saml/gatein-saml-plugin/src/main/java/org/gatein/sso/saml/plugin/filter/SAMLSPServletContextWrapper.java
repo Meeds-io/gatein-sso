@@ -22,8 +22,8 @@ import javax.servlet.SessionCookieConfig;
 import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 /**
  * This class wraps an HTTP ServletContext to be able to get
@@ -32,7 +32,7 @@ import org.gatein.common.logging.LoggerFactory;
 public class SAMLSPServletContextWrapper implements ServletContext {
   public static final String FILE_PREFIX = "file:";
 
-  public static final Logger log         = LoggerFactory.getLogger(PortalIDPWebBrowserSSOFilter.class);
+  public static final Log    log         = ExoLogger.getLogger(PortalIDPWebBrowserSSOFilter.class);
 
   private ServletContext     delegate;
 

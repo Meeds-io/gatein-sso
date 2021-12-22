@@ -23,8 +23,8 @@
 
 package org.gatein.sso.integration;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
@@ -46,7 +46,9 @@ public class SSODelegateLoginModule implements LoginModule
    private static final String OPTION_ENABLED = "enabled";
 
    private static final ConcurrentMap<String, Class<LoginModule>> delegateClasses = new ConcurrentHashMap<String, Class<LoginModule>>();
-   private static final Logger log = LoggerFactory.getLogger(SSODelegateLoginModule.class);
+
+   private static final Log                                      log                       =
+                                                                     ExoLogger.getLogger(SSODelegateLoginModule.class);
 
    private LoginModule delegate;
    private boolean enabled;

@@ -40,8 +40,8 @@ import org.apache.catalina.LifecycleState;
 import org.apache.catalina.Valve;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 /**
  * Delegates work to another valve configured through option 'delegateValveClassName'. It's possible to disable
@@ -53,7 +53,7 @@ import org.gatein.common.logging.LoggerFactory;
  */
 public class SSODelegateValve implements Valve, Contained, MBeanRegistration, Lifecycle
 {
-   private static final Logger log = LoggerFactory.getLogger(SSODelegateValve.class);
+  private static final Log log = ExoLogger.getLogger(SSODelegateValve.class);
 
    // Injected by container
    // If true, then we are in SSO and we have delegate valve where we should resend all method calls

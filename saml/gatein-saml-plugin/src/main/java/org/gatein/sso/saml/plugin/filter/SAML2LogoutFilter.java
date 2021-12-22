@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 import org.gatein.sso.agent.filter.api.SSOInterceptorInitializationContext;
 import org.picketlink.common.constants.GeneralConstants;
@@ -31,7 +31,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
 
   public static final String                 SAML_LOGOUT_ATTRIBUTE = "SAML_LOGOUT_IN_PROGRESS";
 
-  private static final Logger                 log                   = LoggerFactory.getLogger(SAML2LogoutFilter.class);
+  private static final Log                    log                   = ExoLogger.getLogger(SAML2LogoutFilter.class);
 
   public static final String                  COOKIE_NAME           = "rememberme";
 

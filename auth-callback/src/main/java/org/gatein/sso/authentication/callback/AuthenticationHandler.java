@@ -44,8 +44,8 @@ import org.exoplatform.services.security.PasswordCredential;
 import org.exoplatform.services.security.UsernameCredential;
 
 import org.exoplatform.services.rest.resource.ResourceContainer;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import java.util.Collection;
 
@@ -59,7 +59,7 @@ import java.util.Collection;
 @Path("/sso/authcallback")
 public class AuthenticationHandler implements ResourceContainer
 {
-   private static final Logger log = LoggerFactory.getLogger(AuthenticationHandler.class);
+  private static final Log log = ExoLogger.getLogger(AuthenticationHandler.class);
 
    // If false, then rest callbacks are disabled
    private final boolean callbackEnabled;

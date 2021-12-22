@@ -24,8 +24,8 @@
 package org.gatein.sso.integration;
 
 import org.exoplatform.container.component.ComponentPlugin;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 
 import java.util.LinkedHashMap;
@@ -42,7 +42,7 @@ public class SSOFilterIntegratorImpl implements SSOFilterIntegrator
    // Key is filter (SSOInterceptor), value is filterMapping
    private final Map<SSOInterceptor, String> ssoInterceptors = new LinkedHashMap<SSOInterceptor, String>();
 
-   private static final Logger log = LoggerFactory.getLogger(SSOFilterIntegratorImpl.class);
+   private static final Log                 log             = ExoLogger.getLogger(SSOFilterIntegratorImpl.class);
 
    public void addPlugin(ComponentPlugin plugin)
    {

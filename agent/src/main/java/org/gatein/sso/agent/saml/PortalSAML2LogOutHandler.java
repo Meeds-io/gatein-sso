@@ -23,8 +23,8 @@
 
 package org.gatein.sso.agent.saml;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.wci.ServletContainerFactory;
 import org.picketlink.identity.federation.core.saml.v2.interfaces.SAML2HandlerRequest;
 import org.picketlink.identity.federation.core.saml.v2.interfaces.SAML2HandlerResponse;
@@ -50,7 +50,7 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
 
   private static final String OAUTH_COOKIE_NAME = "oauth_rememberme";
 
-   private static Logger log = LoggerFactory.getLogger(PortalSAML2LogOutHandler.class);
+  private static Log          log               = ExoLogger.getLogger(PortalSAML2LogOutHandler.class);
    
    @Override
    public void handleRequestType(SAML2HandlerRequest request, SAML2HandlerResponse response) throws ProcessingException

@@ -21,14 +21,13 @@
  */
 package org.gatein.sso.agent.filter;
 
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.common.http.QueryStringParser;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
 import org.gatein.sso.agent.filter.api.AbstractSSOInterceptor;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.FilterChain;
@@ -51,7 +50,7 @@ public abstract class AbstractLogoutFilter extends AbstractSSOInterceptor
     private static final String SSO_LOGOUT_REQ_URI = "SSO_LOGOUT_REQ_URI";
     private static final String SSO_LOGOUT_REQ_QUERY_STRING = "SSO_LOGOUT_REQ_QUERY_STRING";
 
-   protected final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected final Log       log                         = ExoLogger.getLogger(this.getClass());
 
 	protected void initImpl()
 	{

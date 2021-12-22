@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.GenericAgent;
 import org.gatein.sso.agent.filter.api.AbstractSSOInterceptor;
 import org.gatein.sso.agent.opensso.OpenSSOAgent;
@@ -23,7 +23,7 @@ import org.exoplatform.commons.utils.PropertyManager;
  * @author soshah
  */
 public class InitiateLoginFilter extends AbstractSSOInterceptor {
-  private static Logger    log                                = LoggerFactory.getLogger(InitiateLoginFilter.class);
+  private static Log       log                                = ExoLogger.getLogger(InitiateLoginFilter.class);
 
   private static final int DEFAULT_MAX_NUMBER_OF_LOGIN_ERRORS = 3;
 

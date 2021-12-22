@@ -23,8 +23,8 @@
 
 package org.gatein.sso.agent.opensso;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.common.util.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 class CDMessageParser
 {
 
-   private static final Logger log = LoggerFactory.getLogger(CDMessageParser.class);
+  private static final Log     log                    = ExoLogger.getLogger(CDMessageParser.class);
 
    private static final Pattern SAML_SUCCESS_PATTERN = Pattern.compile("<samlp:StatusCode Value=(.*)>");
    private static final Pattern SAML_DATE_CONDITIONS = Pattern.compile("<saml:Conditions  NotBefore=\"(.*)\" NotOnOrAfter=\"(.*)\" >");

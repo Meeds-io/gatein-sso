@@ -21,8 +21,8 @@
 */
 package org.gatein.sso.agent.filter;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.AbstractSSOInterceptor;
 
 import java.io.IOException;
@@ -41,7 +41,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginRedirectFilter extends AbstractSSOInterceptor
 {
 	String loginUrl;
-   private static final Logger log = LoggerFactory.getLogger(LoginRedirectFilter.class);
+
+  private static final Log log = ExoLogger.getLogger(LoginRedirectFilter.class);
 	
 	protected void initImpl()
 	{
