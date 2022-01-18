@@ -31,8 +31,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.GenericAgent;
 
 import javax.servlet.http.Cookie;
@@ -59,7 +59,7 @@ public class OpenSSOAgentImpl extends GenericAgent implements OpenSSOAgent
 
     private static final String[] LINE_SEPARATORS = new String[] { WINDOWS_SEPARATOR, UNIX_SEPARATOR, MAC_SEPARATOR };
 
-   private static Logger log = LoggerFactory.getLogger(OpenSSOAgentImpl.class);
+    private static Log          log                 = ExoLogger.getLogger(OpenSSOAgentImpl.class);
 	
 	private String cookieName;
 	private String serverUrl;

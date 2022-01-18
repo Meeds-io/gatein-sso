@@ -23,8 +23,8 @@
 
 package org.gatein.sso.agent.filter;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.opensso.OpenSSOAgentImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ import java.util.Random;
  */
 public class OpenSSOCDLoginRedirectFilter extends LoginRedirectFilter
 {
-   private static final Logger log = LoggerFactory.getLogger(OpenSSOCDLoginRedirectFilter.class);
+  private static final Log log        = ExoLogger.getLogger(OpenSSOCDLoginRedirectFilter.class);
 
    private String openSSORealm;
    private String agentUrl;

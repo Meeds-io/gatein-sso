@@ -26,10 +26,10 @@ package org.gatein.sso.agent;
 import org.apache.commons.lang.StringUtils;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.PropertyManager;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
 import org.gatein.wci.security.Credentials;
 
 import org.exoplatform.container.ExoContainer;
@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class GenericAgent
 {
-   private static Logger log = LoggerFactory.getLogger(GenericAgent.class);
+  private static Log          log                       = ExoLogger.getLogger(GenericAgent.class);
 
    public static final String AUTHENTICATED_CREDENTIALS = "authenticatedCredentials";
 

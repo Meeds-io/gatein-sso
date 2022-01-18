@@ -27,8 +27,8 @@ import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.web.AbstractFilter;
 import org.exoplatform.container.xml.InitParams;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -44,7 +44,8 @@ public abstract class AbstractSSOInterceptor extends AbstractFilter implements S
 
    private SSOInterceptorInitializationContext interceptorContext;
 
-   private static final Logger log = LoggerFactory.getLogger(AbstractSSOInterceptor.class);
+   private static final Log                   log                                   =
+                                                  ExoLogger.getLogger(AbstractSSOInterceptor.class);
 
 
    /**

@@ -25,8 +25,8 @@ package org.gatein.sso.agent.tomcat;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import java.io.IOException;
  */
 public class ServletAccessValve extends ValveBase
 {
-   private static final Logger log = LoggerFactory.getLogger(ServletAccessValve.class);
+  private static final Log log = ExoLogger.getLogger(ServletAccessValve.class);
    
    @Override
    public void invoke(Request request, Response response) throws IOException, ServletException

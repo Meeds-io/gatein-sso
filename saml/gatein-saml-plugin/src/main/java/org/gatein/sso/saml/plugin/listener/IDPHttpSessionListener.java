@@ -23,8 +23,8 @@
 
 package org.gatein.sso.saml.plugin.listener;
 
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.integration.SSOUtils;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -37,7 +37,7 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class IDPHttpSessionListener implements HttpSessionListener
 {
-   private static final Logger log = LoggerFactory.getLogger(IDPHttpSessionListener.class);
+  private static final Log             log                  = ExoLogger.getLogger(IDPHttpSessionListener.class);
 
    private static final String PROPERTY_IDP_ENABLED = "gatein.sso.idp.listener.enabled";
 

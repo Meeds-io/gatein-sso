@@ -24,9 +24,9 @@
 package org.gatein.sso.agent.filter;
 
 import org.exoplatform.container.web.AbstractFilter;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.security.jaas.UserPrincipal;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
 import org.jboss.security.SecurityContext;
 import org.jboss.security.SecurityContextAssociation;
 import org.jboss.security.client.SecurityClient;
@@ -52,7 +52,7 @@ import org.picketlink.identity.federation.core.wstrust.SamlCredential;
  */
 public class PicketlinkSTSIntegrationFilter extends AbstractFilter
 {
-   private static Logger log = LoggerFactory.getLogger(PicketlinkSTSIntegrationFilter.class);
+  private static Log log = ExoLogger.getLogger(PicketlinkSTSIntegrationFilter.class);
    
    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
    {

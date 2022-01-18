@@ -27,8 +27,8 @@ import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 
 
@@ -43,7 +43,7 @@ public class SSOFilterIntegratorPlugin extends BaseComponentPlugin
    private final boolean enabled;
    private final String filterMapping;
 
-   private static final Logger log = LoggerFactory.getLogger(SSOFilterIntegratorPlugin.class);
+   private static final Log    log = ExoLogger.getLogger(SSOFilterIntegratorPlugin.class);
 
    public SSOFilterIntegratorPlugin(InitParams params, ExoContainerContext containerContext)
    {

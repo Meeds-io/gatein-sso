@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 import org.gatein.sso.agent.filter.api.SSOInterceptorInitializationContext;
 import org.picketlink.common.constants.GeneralConstants;
@@ -33,8 +33,8 @@ public class PortalIDPWebBrowserSSOFilter extends IDPFilter implements SSOInterc
 
   public static final String                 ORIGINAL_HTTP_SERVLET_REQUEST_PARAM = "OriginalHttpServletRequest";
 
-  private static final Logger                 log                                 =
-                                                  LoggerFactory.getLogger(PortalIDPWebBrowserSSOFilter.class);
+  private static final Log                    log                                 =
+                                                  ExoLogger.getLogger(PortalIDPWebBrowserSSOFilter.class);
 
   /**
    * The filter configuration

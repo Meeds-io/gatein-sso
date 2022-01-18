@@ -33,8 +33,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.gatein.common.util.Base64;
 import org.gatein.sso.agent.filter.api.AbstractSSOInterceptor;
 import org.ietf.jgss.GSSContext;
@@ -44,7 +45,7 @@ import org.ietf.jgss.GSSManager;
 import org.ietf.jgss.Oid;
 
 public class SPNEGOSSOFilter extends AbstractSSOInterceptor {
-    private static final Logger log = LoggerFactory.getLogger(AbstractSSOInterceptor.class);
+  private static final Log        log              = ExoLogger.getLogger(AbstractSSOInterceptor.class);
 
     private static final GSSManager MANAGER = GSSManager.getInstance();
 
