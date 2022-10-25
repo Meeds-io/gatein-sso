@@ -139,11 +139,19 @@ public class SimpleGroup extends SimplePrincipal implements Cloneable
    }
    
    @Override
-   public boolean equals ( Object o ) {
-      if (this == o) return true;
-      if (o == null || getClass () != o.getClass ()) return false;
-      if (! super.equals ( o )) return false;
-      SimpleGroup that = ( SimpleGroup ) o;
-      return Objects.equals ( members , that.members );
+   public boolean equals(Object o) {
+     if (this == o)
+       return true;
+     if (o == null || getClass() != o.getClass())
+       return false;
+     if (!super.equals(o))
+       return false;
+     SimpleGroup that = (SimpleGroup) o;
+     return Objects.equals(members, that.members);
+   }
+
+   @Override
+   public int hashCode() {
+     return Objects.hash(super.hashCode(), members);
    }
 }
