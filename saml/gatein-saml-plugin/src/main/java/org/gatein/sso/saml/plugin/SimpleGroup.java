@@ -1,4 +1,4 @@
-/*
+/**
 * JBoss, Home of Professional Open Source
 * Copyright 2005, JBoss Inc., and individual contributors as indicated
 * by the @authors tag. See the copyright.txt in the distribution for a
@@ -22,12 +22,7 @@
 package org.gatein.sso.saml.plugin;
 
 import java.security.Principal;
-import java.security.acl.Group;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 
 /**
@@ -40,7 +35,7 @@ import java.util.Iterator;
  * @version $Revision$
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-public class SimpleGroup extends SimplePrincipal implements Group, Cloneable
+public class SimpleGroup extends SimplePrincipal implements Cloneable
 {
    /** The serialVersionUID */
    private static final long serialVersionUID = 605185963957807247L;
@@ -89,9 +84,9 @@ public class SimpleGroup extends SimplePrincipal implements Group, Cloneable
          while( isMember == false && iter.hasNext() )
          {
             Object next = iter.next();
-            if( next instanceof Group )
+            if( next instanceof SimpleGroup )
             {
-               Group group = (Group) next;
+               SimpleGroup group = (SimpleGroup) next;
                isMember = group.isMember(member);
             }
          }
@@ -141,5 +136,22 @@ public class SimpleGroup extends SimplePrincipal implements Group, Cloneable
       if(clone != null)
          clone.members = (HashMap)this.members.clone();
       return clone;
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+     if (this == o)
+       return true;
+     if (o == null || getClass() != o.getClass())
+       return false;
+     if (!super.equals(o))
+       return false;
+     SimpleGroup that = (SimpleGroup) o;
+     return Objects.equals(members, that.members);
+   }
+
+   @Override
+   public int hashCode() {
+     return Objects.hash(super.hashCode(), members);
    }
 }

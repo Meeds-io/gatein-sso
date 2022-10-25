@@ -36,9 +36,6 @@ import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginException;
 import java.security.Principal;
-import java.security.acl.Group;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -150,21 +147,6 @@ public class SAML2IntegrationLoginModule extends SAML2LoginModule
          return (String)tmp;
       }
    }
-
-   @Override
-   protected Group[] getRoleSets() throws LoginException
-   {
-      if (useSAMLRoles)
-      {
-         return super.getRoleSets();
-      }
-      else
-      {
-         // Delegate creation of Group principal to next login module
-         return new Group[] {};
-      }
-   }
-
 
 
    // *********************** Helper private methods for GateIn integration *****************************
