@@ -137,4 +137,13 @@ public class SimpleGroup extends SimplePrincipal implements Cloneable
          clone.members = (HashMap)this.members.clone();
       return clone;
    }
+   
+   @Override
+   public boolean equals ( Object o ) {
+      if (this == o) return true;
+      if (o == null || getClass () != o.getClass ()) return false;
+      if (! super.equals ( o )) return false;
+      SimpleGroup that = ( SimpleGroup ) o;
+      return Objects.equals ( members , that.members );
+   }
 }
