@@ -22,10 +22,7 @@
 package org.gatein.sso.saml.plugin;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 
 /**
@@ -75,8 +72,27 @@ public class SimpleGroup extends SimplePrincipal implements Cloneable
     @return true if the principal is a member of this group,
     false otherwise.
     */
-   public boolean isMember ( Principal member ) {
-      return members.containsKey ( member );
+   public boolean isMember(Principal member)
+   {
+      // First see if there is a key with the member name
+      boolean isMember = members.containsKey(member);
+
+      if( isMember == false )
+      {   // Check any Groups for membership
+         Collection values = members.values();
+         Iterator iter = values.iterator();
+         while( isMember == false && iter.hasNext() )
+         {
+            Object next = iter.next();
+            if( next instanceof SimpleGroup )
+            {
+               SimpleGroup group = (SimpleGroup) next;
+               isMember = group.isMember(member);
+            }
+         }
+      }
+
+      return isMember;
    }
 
    /** Returns an enumeration of the members in the group.
