@@ -45,7 +45,7 @@
   </modules>
   
   <properties>
-    <org.exoplatform.ws.version>6.5.x-exo-SNAPSHOT</org.exoplatform.ws.version>
+    <org.exoplatform.ws.version>6.5.0-exo-20230611</org.exoplatform.ws.version>
     <!-- Sonar properties -->
     <sonar.organization>meeds-io</sonar.organization>
   </properties>
