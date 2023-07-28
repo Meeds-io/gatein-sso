@@ -6,18 +6,19 @@
     property for the specific version - add a dependency in the
     dependencyManagement section which refers to the property
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>maven-parent-pom</artifactId>
     <groupId>org.exoplatform</groupId>
     <version>26-exo-M04</version>
-    <relativePath />
+    <relativePath/>
   </parent>
   
   <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
-  <version>6.5.0-exo-20230727</version>
+  <version>6.5.x-exo-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   
@@ -28,7 +29,7 @@
     <connection>scm:git:git://github.com/meeds-io/gatein-sso.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/meeds-io/gatein-sso.git</developerConnection>
     <url>https://github.com/meeds-io/gatein-sso</url>
-    <tag>6.5.0-exo-20230727</tag>
+    <tag>HEAD</tag>
   </scm>
   
   <modules>
@@ -44,7 +45,7 @@
   </modules>
   
   <properties>
-    <org.exoplatform.ws.version>6.5.0-exo-20230727</org.exoplatform.ws.version>
+    <org.exoplatform.ws.version>6.5.x-exo-SNAPSHOT</org.exoplatform.ws.version>
     <!-- Sonar properties -->
     <sonar.organization>meeds-io</sonar.organization>
   </properties>
