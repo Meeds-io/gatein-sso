@@ -6,7 +6,7 @@
     <groupId>org.exoplatform.gatein.sso</groupId>
     <artifactId>sso-parent</artifactId>
     <relativePath>../pom.xml</relativePath>
-    <version>6.5.x-exo-SNAPSHOT</version>
+    <version>6.5.0-exo-20230911</version>
   </parent>
   <artifactId>spnegosso</artifactId>
 
