@@ -2,7 +2,7 @@
    <parent>
       <artifactId>sso-saml-parent</artifactId>
       <groupId>org.exoplatform.gatein.sso</groupId>
-      <version>6.5.0-exo-20230913</version>
+      <version>6.5.x-exo-SNAPSHOT</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
 
