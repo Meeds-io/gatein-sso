@@ -70,7 +70,11 @@ public class LoginRedirectFilter extends AbstractSSOInterceptor
     */
    protected String getLoginRedirectURL(HttpServletRequest httpRequest)
    {
-      return this.loginUrl;
+		 String url = this.loginUrl;
+		 if (httpRequest.getQueryString() != null) {
+			 url = url + "?" + httpRequest.getQueryString();
+		 }
+		 return url;
    }
 
 }
