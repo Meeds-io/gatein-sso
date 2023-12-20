@@ -1,0 +1,793 @@
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/AbstractServerLoginModule.java picketlink/org/jboss/security/auth/spi/AbstractServerLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/AbstractServerLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/AbstractServerLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -31,7 +31,7 @@
+ import javax.security.auth.spi.LoginModule;
+ import java.lang.reflect.Constructor;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.*;
+ 
+ /**
+@@ -209,7 +209,7 @@
+     to the subject getPrincipals() Set.
+     
+     @see javax.security.auth.Subject;
+-    @see java.security.acl.Group;
++    @see org.jboss.security.Group;
+     @return true always.
+     */
+    public boolean commit() throws LoginException
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/AnonLoginModule.java picketlink/org/jboss/security/auth/spi/AnonLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/AnonLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/AnonLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+ */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import javax.security.auth.login.LoginException;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/BaseCertLoginModule.java picketlink/org/jboss/security/auth/spi/BaseCertLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/BaseCertLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/BaseCertLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -25,7 +25,7 @@
+ import java.security.KeyStore;
+ import java.security.KeyStoreException;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.security.cert.X509Certificate;
+ import java.util.ArrayList;
+ import java.util.Enumeration;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/CertRolesLoginModule.java picketlink/org/jboss/security/auth/spi/CertRolesLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/CertRolesLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/CertRolesLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.io.IOException;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Properties;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/DatabaseCertLoginModule.java picketlink/org/jboss/security/auth/spi/DatabaseCertLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/DatabaseCertLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/DatabaseCertLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+ */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/DatabaseServerLoginModule.java picketlink/org/jboss/security/auth/spi/DatabaseServerLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/DatabaseServerLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/DatabaseServerLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+ */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/DbUtil.java picketlink/org/jboss/security/auth/spi/DbUtil.java
+--- picketlink-orig/org/jboss/security/auth/spi/DbUtil.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/DbUtil.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/IdentityLoginModule.java picketlink/org/jboss/security/auth/spi/IdentityLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/IdentityLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/IdentityLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.StringTokenizer;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/LdapExtLoginModule.java picketlink/org/jboss/security/auth/spi/LdapExtLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/LdapExtLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/LdapExtLoginModule.java	2023-12-17 08:04:43.368951953 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Iterator;
+ import java.util.Map;
+ import java.util.Properties;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/LdapLoginModule.java picketlink/org/jboss/security/auth/spi/LdapLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/LdapLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/LdapLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Arrays;
+ import java.util.Iterator;
+ import java.util.Properties;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/LdapUsersLoginModule.java picketlink/org/jboss/security/auth/spi/LdapUsersLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/LdapUsersLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/LdapUsersLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+  */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Iterator;
+ import java.util.Map;
+ import java.util.Map.Entry;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/otp/JBossTimeBasedOTPLoginModule.java picketlink/org/jboss/security/auth/spi/otp/JBossTimeBasedOTPLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/otp/JBossTimeBasedOTPLoginModule.java	2023-12-17 08:04:11.748905792 +0100
++++ picketlink/org/jboss/security/auth/spi/otp/JBossTimeBasedOTPLoginModule.java	2023-12-17 08:04:43.368951953 +0100
+@@ -24,7 +24,7 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.security.GeneralSecurityException;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Arrays;
+ import java.util.HashMap;
+ import java.util.HashSet;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/PropertiesUsersLoginModule.java picketlink/org/jboss/security/auth/spi/PropertiesUsersLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/PropertiesUsersLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/PropertiesUsersLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.io.IOException;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Properties;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/RemoteHostTrustLoginModule.java picketlink/org/jboss/security/auth/spi/RemoteHostTrustLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/RemoteHostTrustLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/RemoteHostTrustLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+  */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.Map;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/RoleMappingLoginModule.java picketlink/org/jboss/security/auth/spi/RoleMappingLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/RoleMappingLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/RoleMappingLoginModule.java	2023-12-17 08:04:43.368951953 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.Iterator;
+ import java.util.Map;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/SimpleServerLoginModule.java picketlink/org/jboss/security/auth/spi/SimpleServerLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/SimpleServerLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/SimpleServerLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import javax.security.auth.login.LoginException;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/Users.java picketlink/org/jboss/security/auth/spi/Users.java
+--- picketlink-orig/org/jboss/security/auth/spi/Users.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/Users.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.Enumeration;
+ import java.util.HashMap;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/UsersLoginModule.java picketlink/org/jboss/security/auth/spi/UsersLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/UsersLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/UsersLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -26,7 +26,7 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.net.URL;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Properties;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/UsersRolesLoginModule.java picketlink/org/jboss/security/auth/spi/UsersRolesLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/UsersRolesLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/UsersRolesLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.auth.spi;
+ 
+ import java.io.IOException;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Properties;
+ 
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/Util.java picketlink/org/jboss/security/auth/spi/Util.java
+--- picketlink-orig/org/jboss/security/auth/spi/Util.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/Util.java	2023-12-17 08:04:43.364951947 +0100
+@@ -31,7 +31,7 @@
+ import java.security.MessageDigest;
+ import java.security.Principal;
+ import java.security.PrivilegedActionException;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.Enumeration;
+ import java.util.Properties;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/XMLLoginModule.java picketlink/org/jboss/security/auth/spi/XMLLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/XMLLoginModule.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/auth/spi/XMLLoginModule.java	2023-12-17 08:04:43.364951947 +0100
+@@ -21,7 +21,7 @@
+ */
+ package org.jboss.security.auth.spi;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/jboss/security/AuthorizationManager.java picketlink/org/jboss/security/AuthorizationManager.java
+--- picketlink-orig/org/jboss/security/AuthorizationManager.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/AuthorizationManager.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/jboss/security/identity/extensions/CertificateIdentityFactory.java picketlink/org/jboss/security/identity/extensions/CertificateIdentityFactory.java
+--- picketlink-orig/org/jboss/security/identity/extensions/CertificateIdentityFactory.java	2023-12-17 08:04:11.740905781 +0100
++++ picketlink/org/jboss/security/identity/extensions/CertificateIdentityFactory.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.identity.extensions;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.security.cert.X509Certificate;
+ 
+ import org.jboss.security.identity.IdentityFactory;
+diff -uNr picketlink-orig/org/jboss/security/identity/extensions/CredentialIdentityFactory.java picketlink/org/jboss/security/identity/extensions/CredentialIdentityFactory.java
+--- picketlink-orig/org/jboss/security/identity/extensions/CredentialIdentityFactory.java	2023-12-17 08:04:11.740905781 +0100
++++ picketlink/org/jboss/security/identity/extensions/CredentialIdentityFactory.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.identity.extensions;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import org.jboss.security.identity.IdentityFactory;
+ import org.jboss.security.identity.Role;
+diff -uNr picketlink-orig/org/jboss/security/identity/Identity.java picketlink/org/jboss/security/identity/Identity.java
+--- picketlink-orig/org/jboss/security/identity/Identity.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/identity/Identity.java	2023-12-17 08:04:43.356951936 +0100
+@@ -23,7 +23,7 @@
+ 
+ import java.io.Serializable;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ //$Id$
+ 
+diff -uNr picketlink-orig/org/jboss/security/identity/plugins/IdentityFactory.java picketlink/org/jboss/security/identity/plugins/IdentityFactory.java
+--- picketlink-orig/org/jboss/security/identity/plugins/IdentityFactory.java	2023-12-17 08:04:11.740905781 +0100
++++ picketlink/org/jboss/security/identity/plugins/IdentityFactory.java	2023-12-17 08:04:43.356951936 +0100
+@@ -23,7 +23,7 @@
+ 
+ import java.lang.reflect.Constructor;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import org.jboss.security.identity.Identity;
+ import org.jboss.security.identity.Role;
+diff -uNr picketlink-orig/org/jboss/security/identity/plugins/SimpleIdentity.java picketlink/org/jboss/security/identity/plugins/SimpleIdentity.java
+--- picketlink-orig/org/jboss/security/identity/plugins/SimpleIdentity.java	2023-12-17 08:04:11.740905781 +0100
++++ picketlink/org/jboss/security/identity/plugins/SimpleIdentity.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.identity.plugins;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import org.jboss.security.identity.Identity;
+ import org.jboss.security.identity.Role;
+diff -uNr picketlink-orig/org/jboss/security/identity/plugins/SimpleRoleGroup.java picketlink/org/jboss/security/identity/plugins/SimpleRoleGroup.java
+--- picketlink-orig/org/jboss/security/identity/plugins/SimpleRoleGroup.java	2023-12-17 08:04:11.740905781 +0100
++++ picketlink/org/jboss/security/identity/plugins/SimpleRoleGroup.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.identity.plugins;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.Enumeration;
+diff -uNr picketlink-orig/org/jboss/security/jacc/ContextPolicy.java picketlink/org/jboss/security/jacc/ContextPolicy.java
+--- picketlink-orig/org/jboss/security/jacc/ContextPolicy.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/jacc/ContextPolicy.java	2023-12-17 08:04:43.364951947 +0100
+@@ -26,7 +26,7 @@
+ import java.security.Permissions;
+ import java.security.Principal;
+ import java.security.ProtectionDomain;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.Enumeration;
+ import java.util.HashMap;
+diff -uNr picketlink-orig/org/jboss/security/mapping/providers/DeploymentRolesMappingProvider.java picketlink/org/jboss/security/mapping/providers/DeploymentRolesMappingProvider.java
+--- picketlink-orig/org/jboss/security/mapping/providers/DeploymentRolesMappingProvider.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/mapping/providers/DeploymentRolesMappingProvider.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.mapping.providers;
+  
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/jboss/security/mapping/providers/MappingProviderUtil.java picketlink/org/jboss/security/mapping/providers/MappingProviderUtil.java
+--- picketlink-orig/org/jboss/security/mapping/providers/MappingProviderUtil.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/mapping/providers/MappingProviderUtil.java	2023-12-17 08:04:43.364951947 +0100
+@@ -23,7 +23,7 @@
+ 
+ import java.lang.reflect.Constructor;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.HashSet;
+ import java.util.StringTokenizer;
+diff -uNr picketlink-orig/org/jboss/security/mapping/providers/principal/AbstractPrincipalMappingProvider.java picketlink/org/jboss/security/mapping/providers/principal/AbstractPrincipalMappingProvider.java
+--- picketlink-orig/org/jboss/security/mapping/providers/principal/AbstractPrincipalMappingProvider.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/mapping/providers/principal/AbstractPrincipalMappingProvider.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,13 +22,13 @@
+ package org.jboss.security.mapping.providers.principal;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ 
+ import org.jboss.security.mapping.MappingProvider;
+ 
+ /**
+  * Abstract class for Principal mapping providers
+- * <b>Group Principal (java.security.acl.Group) is not supported.</b>
++ * <b>Group Principal (org.jboss.security.Group) is not supported.</b>
+  * @author Anil.Saldhana@redhat.com
+  */
+ public abstract class AbstractPrincipalMappingProvider implements MappingProvider<Principal>
+diff -uNr picketlink-orig/org/jboss/security/mapping/providers/role/AbstractRolesMappingProvider.java picketlink/org/jboss/security/mapping/providers/role/AbstractRolesMappingProvider.java
+--- picketlink-orig/org/jboss/security/mapping/providers/role/AbstractRolesMappingProvider.java	2023-12-17 08:04:11.744905786 +0100
++++ picketlink/org/jboss/security/mapping/providers/role/AbstractRolesMappingProvider.java	2023-12-17 08:04:43.364951947 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security.mapping.providers.role;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.Map;
+ import java.util.Set;
+diff -uNr picketlink-orig/org/jboss/security/NestableGroup.java picketlink/org/jboss/security/NestableGroup.java
+--- picketlink-orig/org/jboss/security/NestableGroup.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/NestableGroup.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.LinkedList;
+ 
+diff -uNr picketlink-orig/org/jboss/security/NestablePrincipal.java picketlink/org/jboss/security/NestablePrincipal.java
+--- picketlink-orig/org/jboss/security/NestablePrincipal.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/NestablePrincipal.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.jboss.security;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.LinkedList;
+ 
+diff -uNr picketlink-orig/org/jboss/security/plugins/auth/JaasSecurityManagerBase.java picketlink/org/jboss/security/plugins/auth/JaasSecurityManagerBase.java
+--- picketlink-orig/org/jboss/security/plugins/auth/JaasSecurityManagerBase.java	2023-12-17 08:04:11.748905792 +0100
++++ picketlink/org/jboss/security/plugins/auth/JaasSecurityManagerBase.java	2023-12-17 08:04:43.368951953 +0100
+@@ -228,7 +228,7 @@
+     the active user and assigned user roles.
+     @param rolePrincipals - a Set of Principals for the roles to check.
+     
+-    @see java.security.acl.Group;
++    @see org.jboss.security.Group;
+     @see Subject#getPrincipals()
+     */
+    public boolean doesUserHaveRole(Principal principal, Set<Principal> rolePrincipals)
+diff -uNr picketlink-orig/org/jboss/security/plugins/JBossAuthorizationManager.java picketlink/org/jboss/security/plugins/JBossAuthorizationManager.java
+--- picketlink-orig/org/jboss/security/plugins/JBossAuthorizationManager.java	2023-12-17 08:04:11.748905792 +0100
++++ picketlink/org/jboss/security/plugins/JBossAuthorizationManager.java	2023-12-17 08:04:43.368951953 +0100
+@@ -24,7 +24,7 @@
+ import static org.jboss.security.SecurityConstants.ROLES_IDENTIFIER;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.HashMap;
+ import java.util.HashSet;
+@@ -139,7 +139,7 @@
+     the active user and assigned user roles.
+     @param rolePrincipals - a Set of Principals for the roles to check.
+     
+-    @see java.security.acl.Group;
++    @see org.jboss.security.Group;
+     @see Subject#getPrincipals()
+     */
+    public boolean doesUserHaveRole(Principal principal, Set<Principal> rolePrincipals)
+diff -uNr picketlink-orig/org/jboss/security/plugins/JBossSecurityContext.java picketlink/org/jboss/security/plugins/JBossSecurityContext.java
+--- picketlink-orig/org/jboss/security/plugins/JBossSecurityContext.java	2023-12-17 08:04:11.748905792 +0100
++++ picketlink/org/jboss/security/plugins/JBossSecurityContext.java	2023-12-17 08:04:43.368951953 +0100
+@@ -9,7 +9,7 @@
+ import static org.jboss.security.SecurityConstants.ROLES_IDENTIFIER;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.HashMap;
+ import java.util.Map;
+diff -uNr picketlink-orig/org/jboss/security/plugins/JBossSecurityContextUtil.java picketlink/org/jboss/security/plugins/JBossSecurityContextUtil.java
+--- picketlink-orig/org/jboss/security/plugins/JBossSecurityContextUtil.java	2023-12-17 08:04:11.748905792 +0100
++++ picketlink/org/jboss/security/plugins/JBossSecurityContextUtil.java	2023-12-17 08:04:43.368951953 +0100
+@@ -26,7 +26,7 @@
+ import static org.jboss.security.SecurityConstants.RUNAS_IDENTITY_IDENTIFIER;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/jboss/security/SecurityUtil.java picketlink/org/jboss/security/SecurityUtil.java
+--- picketlink-orig/org/jboss/security/SecurityUtil.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/SecurityUtil.java	2023-12-17 08:04:43.356951936 +0100
+@@ -21,7 +21,7 @@
+  */
+ package org.jboss.security;
+ 
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Iterator;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/jboss/security/SimpleGroup.java picketlink/org/jboss/security/SimpleGroup.java
+--- picketlink-orig/org/jboss/security/SimpleGroup.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/jboss/security/SimpleGroup.java	2023-12-17 08:04:43.356951936 +0100
+@@ -24,7 +24,7 @@
+ import java.security.AccessController;
+ import java.security.Principal;
+ import java.security.PrivilegedAction;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.Enumeration;
+diff -uNr picketlink-orig/org/picketbox/datasource/security/CallerIdentityLoginModule.java picketlink/org/picketbox/datasource/security/CallerIdentityLoginModule.java
+--- picketlink-orig/org/picketbox/datasource/security/CallerIdentityLoginModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/CallerIdentityLoginModule.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.picketbox.datasource.security;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/picketbox/datasource/security/ConfiguredIdentityLoginModule.java picketlink/org/picketbox/datasource/security/ConfiguredIdentityLoginModule.java
+--- picketlink-orig/org/picketbox/datasource/security/ConfiguredIdentityLoginModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/ConfiguredIdentityLoginModule.java	2023-12-17 08:04:43.356951936 +0100
+@@ -23,7 +23,7 @@
+ 
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.resource.spi.security.PasswordCredential;
+diff -uNr picketlink-orig/org/picketbox/datasource/security/JaasSecurityDomainIdentityLoginModule.java picketlink/org/picketbox/datasource/security/JaasSecurityDomainIdentityLoginModule.java
+--- picketlink-orig/org/picketbox/datasource/security/JaasSecurityDomainIdentityLoginModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/JaasSecurityDomainIdentityLoginModule.java	2023-12-17 08:04:43.356951936 +0100
+@@ -25,7 +25,7 @@
+ import java.security.Principal;
+ import java.security.PrivilegedActionException;
+ import java.security.PrivilegedExceptionAction;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.management.MBeanServer;
+diff -uNr picketlink-orig/org/picketbox/datasource/security/PBEIdentityLoginModule.java picketlink/org/picketbox/datasource/security/PBEIdentityLoginModule.java
+--- picketlink-orig/org/picketbox/datasource/security/PBEIdentityLoginModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/PBEIdentityLoginModule.java	2023-12-17 08:04:43.356951936 +0100
+@@ -22,7 +22,7 @@
+ package org.picketbox.datasource.security;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.crypto.Cipher;
+diff -uNr picketlink-orig/org/picketbox/datasource/security/SecureIdentityLoginModule.java picketlink/org/picketbox/datasource/security/SecureIdentityLoginModule.java
+--- picketlink-orig/org/picketbox/datasource/security/SecureIdentityLoginModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/SecureIdentityLoginModule.java	2023-12-17 08:04:43.356951936 +0100
+@@ -25,7 +25,7 @@
+ import java.security.InvalidKeyException;
+ import java.security.NoSuchAlgorithmException;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ 
+ import javax.crypto.BadPaddingException;
+diff -uNr picketlink-orig/org/picketbox/datasource/security/SubjectActions.java picketlink/org/picketbox/datasource/security/SubjectActions.java
+--- picketlink-orig/org/picketbox/datasource/security/SubjectActions.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/datasource/security/SubjectActions.java	2023-12-17 08:04:43.356951936 +0100
+@@ -24,7 +24,7 @@
+ import java.security.AccessController;
+ import java.security.Principal;
+ import java.security.PrivilegedAction;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Iterator;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/picketbox/plugins/authorization/PicketBoxAuthorizationModule.java picketlink/org/picketbox/plugins/authorization/PicketBoxAuthorizationModule.java
+--- picketlink-orig/org/picketbox/plugins/authorization/PicketBoxAuthorizationModule.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/plugins/authorization/PicketBoxAuthorizationModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketbox.plugins.authorization;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.HashSet;
+ import java.util.Map;
+diff -uNr picketlink-orig/org/picketbox/util/PicketBoxUtil.java picketlink/org/picketbox/util/PicketBoxUtil.java
+--- picketlink-orig/org/picketbox/util/PicketBoxUtil.java	2023-12-17 08:04:11.736905774 +0100
++++ picketlink/org/picketbox/util/PicketBoxUtil.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketbox.util;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Set;
+ 
+ import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/RegExUserNameLoginModule.java picketlink/org/picketlink/identity/federation/bindings/jboss/auth/RegExUserNameLoginModule.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/RegExUserNameLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/auth/RegExUserNameLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -18,7 +18,7 @@
+ package org.picketlink.identity.federation.bindings.jboss.auth;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Map;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML20CommonTokenRoleAttributeProvider.java picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML20CommonTokenRoleAttributeProvider.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML20CommonTokenRoleAttributeProvider.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML20CommonTokenRoleAttributeProvider.java	2023-12-17 08:04:43.352951930 +0100
+@@ -1,7 +1,7 @@
+ package org.picketlink.identity.federation.bindings.jboss.auth;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Enumeration;
+ import java.util.Map;
+ 
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML2CommonLoginModule.java picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML2CommonLoginModule.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML2CommonLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML2CommonLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketlink.identity.federation.bindings.jboss.auth;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.List;
+ import java.util.Map;
+ 
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML2STSCommonLoginModule.java picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML2STSCommonLoginModule.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAML2STSCommonLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAML2STSCommonLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketlink.identity.federation.bindings.jboss.auth;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.Date;
+ import java.util.HashMap;
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAMLTokenCertValidatingCommonLoginModule.java picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAMLTokenCertValidatingCommonLoginModule.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth/SAMLTokenCertValidatingCommonLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/auth/SAMLTokenCertValidatingCommonLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -24,7 +24,7 @@
+ 
+ import java.security.KeyStore;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.security.cert.CertPath;
+ import java.security.cert.CertPathValidator;
+ import java.security.cert.CertPathValidatorResult;
+diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/subject/PicketLinkGroup.java picketlink/org/picketlink/identity/federation/bindings/jboss/subject/PicketLinkGroup.java
+--- picketlink-orig/org/picketlink/identity/federation/bindings/jboss/subject/PicketLinkGroup.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/identity/federation/bindings/jboss/subject/PicketLinkGroup.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketlink.identity.federation.bindings.jboss.subject;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.Collections;
+ import java.util.Enumeration;
+ import java.util.HashSet;
+@@ -46,7 +46,7 @@
+     /**
+      * Add a role principal to group
+      *
+-     * @see java.security.acl.Group#addMember(java.security.Principal)
++     * @see org.jboss.security.Group#addMember(java.security.Principal)
+      */
+     public boolean addMember(Principal role) {
+         return roles.add(role);
+@@ -55,7 +55,7 @@
+     /**
+      * Check if the role is a member of the group
+      *
+-     * @see java.security.acl.Group#isMember(java.security.Principal)
++     * @see org.jboss.security.Group#isMember(java.security.Principal)
+      */
+     public boolean isMember(Principal role) {
+         return roles.contains(role);
+@@ -64,7 +64,7 @@
+     /**
+      * Get the group members
+      *
+-     * @see java.security.acl.Group#members()
++     * @see org.jboss.security.Group#members()
+      */
+     public Enumeration<? extends Principal> members() {
+         Set<Principal> readOnly = Collections.unmodifiableSet(roles);
+@@ -74,7 +74,7 @@
+     /**
+      * Remove role from groups
+      *
+-     * @see java.security.acl.Group#removeMember(java.security.Principal)
++     * @see org.jboss.security.Group#removeMember(java.security.Principal)
+      */
+     public boolean removeMember(Principal user) {
+         return roles.remove(user);
+diff -uNr picketlink-orig/org/picketlink/identity/federation/core/wstrust/auth/AbstractSTSLoginModule.java picketlink/org/picketlink/identity/federation/core/wstrust/auth/AbstractSTSLoginModule.java
+--- picketlink-orig/org/picketlink/identity/federation/core/wstrust/auth/AbstractSTSLoginModule.java	2023-12-17 08:04:11.728905762 +0100
++++ picketlink/org/picketlink/identity/federation/core/wstrust/auth/AbstractSTSLoginModule.java	2023-12-17 08:04:43.348951924 +0100
+@@ -57,7 +57,7 @@
+ 
+ import java.io.IOException;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+diff -uNr picketlink-orig/org/picketlink/trust/jbossws/handler/AbstractSAML2Handler.java picketlink/org/picketlink/trust/jbossws/handler/AbstractSAML2Handler.java
+--- picketlink-orig/org/picketlink/trust/jbossws/handler/AbstractSAML2Handler.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/trust/jbossws/handler/AbstractSAML2Handler.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ package org.picketlink.trust.jbossws.handler;
+ 
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+diff -uNr picketlink-orig/org/picketlink/trust/jbossws/handler/SecurityActions.java picketlink/org/picketlink/trust/jbossws/handler/SecurityActions.java
+--- picketlink-orig/org/picketlink/trust/jbossws/handler/SecurityActions.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/trust/jbossws/handler/SecurityActions.java	2023-12-17 08:04:43.352951930 +0100
+@@ -24,7 +24,7 @@
+ import java.security.AccessController;
+ import java.security.Principal;
+ import java.security.PrivilegedAction;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.List;
+ 
+ import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/picketlink/trust/jbossws/jaas/SAMLBearerTokenLoginModule.java picketlink/org/picketlink/trust/jbossws/jaas/SAMLBearerTokenLoginModule.java
+--- picketlink-orig/org/picketlink/trust/jbossws/jaas/SAMLBearerTokenLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/trust/jbossws/jaas/SAMLBearerTokenLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -22,7 +22,7 @@
+ import java.io.InputStream;
+ import java.net.URI;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+diff -uNr picketlink-orig/org/picketlink/trust/jbossws/jaas/SAMLRoleLoginModule.java picketlink/org/picketlink/trust/jbossws/jaas/SAMLRoleLoginModule.java
+--- picketlink-orig/org/picketlink/trust/jbossws/jaas/SAMLRoleLoginModule.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/trust/jbossws/jaas/SAMLRoleLoginModule.java	2023-12-17 08:04:43.352951930 +0100
+@@ -23,7 +23,7 @@
+ 
+ import java.io.ByteArrayInputStream;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.List;
+ import java.util.Set;
+ 
+diff -uNr picketlink-orig/org/picketlink/trust/jbossws/util/SecurityActions.java picketlink/org/picketlink/trust/jbossws/util/SecurityActions.java
+--- picketlink-orig/org/picketlink/trust/jbossws/util/SecurityActions.java	2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/trust/jbossws/util/SecurityActions.java	2023-12-17 08:04:43.352951930 +0100
+@@ -24,7 +24,7 @@
+ import java.security.AccessController;
+ import java.security.Principal;
+ import java.security.PrivilegedAction;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.List;
+ 
+ import javax.security.auth.Subject;

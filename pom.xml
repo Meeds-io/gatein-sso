@@ -13,7 +13,6 @@
     <artifactId>maven-parent-pom</artifactId>
     <groupId>org.exoplatform</groupId>
     <version>26</version>
-    <relativePath/>
   </parent>
   
   <groupId>org.exoplatform.gatein.sso</groupId>
@@ -31,19 +30,12 @@
     <url>https://github.com/meeds-io/gatein-sso</url>
     <tag>HEAD</tag>
   </scm>
-  
+
   <modules>
-    <module>agent</module>
-    <module>auth-callback</module>
-    <module>common-plugin</module>
-    <module>opensso</module>
-    <module>spnego</module>
-    <module>spnegosso</module>
-    <module>saml</module>
-    <module>packaging</module>
-    <module>integration</module>
+    <module>sso-agent</module>
+    <module>sso-saml-plugin</module>
   </modules>
-  
+
   <properties>
     <org.exoplatform.ws.version>6.6.x-SNAPSHOT</org.exoplatform.ws.version>
     <!-- Sonar properties -->
@@ -61,36 +53,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      
-      <!-- internal -->
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-auth-callback</artifactId>
-        <version>${project.version}</version>
-      </dependency>
+
+      <!-- Current project artifacts -->
       <dependency>
         <groupId>org.exoplatform.gatein.sso</groupId>
         <artifactId>sso-agent</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-integration</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-common-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>sso-opensso-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
-        <artifactId>spnego</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -100,6 +67,19 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-patch-plugin</artifactId>
+          <version>1.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <!-- This profile is used to allow github action to build branches. The github action is used for sonar analysis -->
   <profiles>
     <profile>
