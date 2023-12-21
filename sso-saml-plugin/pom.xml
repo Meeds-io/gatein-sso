@@ -202,7 +202,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -286,8 +286,8 @@
       <artifactId>exo.core.component.organization.api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
@@ -405,8 +405,7 @@
             <configuration>
               <patchFile>
                 ${basedir}/src/main/patches/java.security.acl.Group.patch</patchFile>
-              <patchTrackingFile>
-                ${project.build.directory}/java.security.acl.Group-patches-applied.txt</patchTrackingFile>
+              <patchTrackingFile>${project.build.directory}/java.security.acl.Group-patches-applied.txt</patchTrackingFile>
               <failurePhrases>skip</failurePhrases>
             </configuration>
             <phase>process-resources</phase>
@@ -418,8 +417,18 @@
             <id>javax.servlet-patch</id>
             <configuration>
               <patchFile>${basedir}/src/main/patches/javax.servlet.patch</patchFile>
-              <patchTrackingFile>
-                ${project.build.directory}/javax.servlet-patches-applied.txt</patchTrackingFile>
+              <patchTrackingFile>${project.build.directory}/javax.servlet-patches-applied.txt</patchTrackingFile>
+            </configuration>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>apply</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>javax.persistence-patch</id>
+            <configuration>
+              <patchFile>${basedir}/src/main/patches/javax.persistence.patch</patchFile>
+              <patchTrackingFile>${project.build.directory}/javax.persistence-patches-applied.txt</patchTrackingFile>
             </configuration>
             <phase>process-resources</phase>
             <goals>
