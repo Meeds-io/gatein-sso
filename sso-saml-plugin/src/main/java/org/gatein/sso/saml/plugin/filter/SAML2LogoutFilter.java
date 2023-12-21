@@ -2,7 +2,7 @@ package org.gatein.sso.saml.plugin.filter;
 
 import java.io.IOException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 import org.gatein.sso.agent.filter.api.SSOInterceptorInitializationContext;
 import org.picketlink.common.constants.GeneralConstants;
