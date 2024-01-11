@@ -35,7 +35,7 @@ import org.apache.catalina.authenticator.FormAuthenticator;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
 import org.gatein.sso.saml.plugin.filter.SAMLSPServletContextWrapper;
 import org.picketlink.common.ErrorCodes;
