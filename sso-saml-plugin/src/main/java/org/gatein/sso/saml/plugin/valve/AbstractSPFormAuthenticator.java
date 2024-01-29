@@ -23,6 +23,10 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.exoplatform.commons.utils.ListAccess;
+import org.exoplatform.services.organization.Query;
+import org.exoplatform.services.organization.User;
+import org.exoplatform.services.organization.UserHandler;
 import org.picketlink.common.ErrorCodes;
 import org.picketlink.common.constants.GeneralConstants;
 import org.picketlink.common.constants.JBossSAMLConstants;
@@ -584,6 +588,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
         String username = principal.getName();
         String password = ServiceProviderSAMLContext.EMPTY_PASSWORD;
 
+        username = checkForEmail(username);
+
         roles.addAll(extractGateinRoles(username));
         if (logger.isTraceEnabled()) {
           logger.trace("Roles determined for username=" + username + "=" + Arrays.toString(roles.toArray()));
@@ -654,6 +660,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
     return localAuthentication(request, response, loginConfig);
   }
+
+
 
   private String getSAMLVersion(Request request) {
     String samlResponse = request.getParameter(GeneralConstants.SAML_RESPONSE_KEY);
@@ -850,4 +858,27 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     String requestedWithHeader = request.getHeader(GeneralConstants.HTTP_HEADER_X_REQUESTED_WITH);
     return requestedWithHeader != null && "XMLHttpRequest".equalsIgnoreCase(requestedWithHeader);
   }
+
+  private String checkForEmail(String username) {
+    //allow to use email as identifier in SAML assertion
+    //if username is an email, we read the related user, and return his username, if there is only one result with this email
+    try {
+      if (username.contains("@")) {
+        OrganizationService organizationService = PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+        UserHandler userHandler = organizationService.getUserHandler();
+        Query emailQuery = new Query();
+        emailQuery.setEmail(username);
+        ListAccess<User> users;
+        users = userHandler.findUsersByQuery(emailQuery);
+        if (users != null && users.getSize() == 1) {
+          return users.load(0, 1)[0].getUserName();
+        }
+      }
+    } catch (Exception e) {
+      logger.samlSPHandleRequestError(e);
+      return null;
+    }
+    return username;
+  }
+
 }
