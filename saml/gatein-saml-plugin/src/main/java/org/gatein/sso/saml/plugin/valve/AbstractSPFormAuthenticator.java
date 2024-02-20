@@ -27,6 +27,10 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.exoplatform.commons.utils.ListAccess;
+import org.exoplatform.services.organization.Query;
+import org.exoplatform.services.organization.User;
+import org.exoplatform.services.organization.UserHandler;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.PortalContainer;
@@ -528,6 +532,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     
                 String username = principal.getName();
                 String password = ServiceProviderSAMLContext.EMPTY_PASSWORD;
+                
+                username = checkForEmail(username);
     
                 roles.addAll(extractGateinRoles(username));
                 if (logger.isTraceEnabled()) {
@@ -784,4 +790,26 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
         String requestedWithHeader = request.getHeader(GeneralConstants.HTTP_HEADER_X_REQUESTED_WITH);
         return requestedWithHeader != null && "XMLHttpRequest".equalsIgnoreCase(requestedWithHeader);
     }
+    
+    private String checkForEmail(String username) {
+    //allow to use email as identifier in SAML assertion
+    //if username is an email, we read the related user, and return his username, if there is only one result with this email
+    try {
+      if (username.contains("@")) {
+        OrganizationService organizationService = PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+        UserHandler userHandler = organizationService.getUserHandler();
+        Query emailQuery = new Query();
+        emailQuery.setEmail(username);
+        ListAccess<User> users;
+        users = userHandler.findUsersByQuery(emailQuery);
+        if (users != null && users.getSize() == 1) {
+          return users.load(0, 1)[0].getUserName();
+        }
+      }
+    } catch (Exception e) {
+      logger.samlSPHandleRequestError(e);
+      return null;
+    }
+    return username;
+  }
 }
