@@ -66,6 +66,8 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
 
   private static final String OAUTH_COOKIE_NAME = "oauth_rememberme";
 
+  private static final String JSESSIONIDSSO_COOKIE_NAME = "JSESSIONIDSSO";
+
   private final SPLogOutHandler sp = new SPLogOutHandler();
 
   private static Log          log               = ExoLogger.getLogger(PortalSAML2LogOutHandler.class);
@@ -146,7 +148,9 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
 
       try
       {
-         ServletContainerFactory.getServletContainer().logout(request, response);
+        if (request.getRemoteUser()!=null) {
+          ServletContainerFactory.getServletContainer().logout(request, response);
+        }
       }
       catch (Exception e)
       {
@@ -155,9 +159,15 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
 
       // Remove rememberme cookie
       Cookie cookie = new Cookie(COOKIE_NAME, "");
-      cookie.setPath(request.getContextPath());
+      cookie.setPath("/");
       cookie.setMaxAge(0);
       response.addCookie(cookie);
+
+     // Remove JSESSIONIDSSO cookie
+     Cookie jsessionIdSSOCookie = new Cookie(JSESSIONIDSSO_COOKIE_NAME, "");
+     jsessionIdSSOCookie.setPath("/");
+     jsessionIdSSOCookie.setMaxAge(0);
+     response.addCookie(jsessionIdSSOCookie);
   
       // Remove oauth cookie
       Cookie oauthCookie = new Cookie(OAUTH_COOKIE_NAME, "");
