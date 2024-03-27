@@ -17,7 +17,7 @@
   
   <groupId>org.exoplatform.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
-  <version>6.5.1-exo</version>
+  <version>6.5.1-exo-patched</version>
   <packaging>pom</packaging>
   
   
