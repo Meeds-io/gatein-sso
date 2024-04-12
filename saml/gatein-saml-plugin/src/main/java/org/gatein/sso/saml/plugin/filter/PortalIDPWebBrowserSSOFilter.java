@@ -152,8 +152,8 @@ public class PortalIDPWebBrowserSSOFilter extends IDPFilter implements SSOInterc
     if (this.servletContextName == null) {
       this.servletContextName = ContainerUtil.getServletContextName(getServletContext());
     }
-    filterConfig.getServletContext().setInitParameter(GeneralConstants.CONFIG_FILE,
-                                                      getInitParameter(GeneralConstants.CONFIG_FILE));
+    filterConfig.getServletContext().setInitParameter(GeneralConstants.CONFIG_FILE_LOCATION,
+                                                      getInitParameter(GeneralConstants.CONFIG_FILE_LOCATION));
     super.init(filterConfig);
   }
 

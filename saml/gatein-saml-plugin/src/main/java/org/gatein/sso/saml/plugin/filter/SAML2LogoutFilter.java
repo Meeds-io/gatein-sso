@@ -37,6 +37,8 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
 
   public static final String                  OAUTH_COOKIE_NAME     = "oauth_rememberme";
 
+  private static final String CONFIG_FILE = "CONFIG_FILE";
+
   /**
    * The filter configuration
    */
@@ -179,7 +181,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
     if (this.servletContextName == null) {
       this.servletContextName = ContainerUtil.getServletContextName(getServletContext());
     }
-    this.configFile = SAMLSPServletContextWrapper.FILE_PREFIX + getInitParameter(GeneralConstants.CONFIG_FILE);
+    this.configFile = getInitParameter(CONFIG_FILE);
     super.init(filterConfig);
   }
 

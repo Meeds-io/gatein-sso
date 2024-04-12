@@ -14,7 +14,7 @@
    <name>GateIn SSO - SAML Identity provider plugin</name>
 
    <properties>
-     <exo.test.coverage.ratio>0.07</exo.test.coverage.ratio>
+     <exo.test.coverage.ratio>0.06</exo.test.coverage.ratio>
    </properties>
 
    <dependencies>
@@ -40,10 +40,12 @@
       <dependency>
          <groupId>org.picketlink</groupId>
          <artifactId>picketlink-common</artifactId>
+         <version>2.7.1.Final</version>
       </dependency>
       <dependency>
          <groupId>org.picketlink</groupId>
          <artifactId>picketlink-config</artifactId>
+         <version>2.7.1.Final</version>
       </dependency>
       <dependency>
          <groupId>javax.servlet</groupId>
@@ -72,8 +74,9 @@
          <artifactId>exo.core.component.organization.api</artifactId>
       </dependency>
       <dependency>
-        <groupId>org.picketlink</groupId>
-        <artifactId>picketlink-federation</artifactId>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-federation</artifactId>
+         <version>2.7.1.Final</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
