@@ -11,11 +11,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>maven-parent-pom</artifactId>
-    <groupId>org.exoplatform</groupId>
-    <version>27-M03</version>
+    <groupId>io.meeds</groupId>
+    <version>27-M04</version>
   </parent>
   
-  <groupId>org.exoplatform.gatein.sso</groupId>
+  <groupId>io.meeds.gatein.sso</groupId>
   <artifactId>sso-parent</artifactId>
   <version>7.0.x-exo-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -37,9 +37,10 @@
   </modules>
 
   <properties>
-    <org.exoplatform.ws.version>7.0.x-exo-SNAPSHOT</org.exoplatform.ws.version>
+    <io.meeds.ws.version>7.0.x-exo-SNAPSHOT</io.meeds.ws.version>
     <!-- Sonar properties -->
     <sonar.organization>meeds-io</sonar.organization>
+    
   </properties>
   
   <dependencyManagement>
@@ -47,21 +48,21 @@
       
       <!-- Import dependency management configuration -->
       <dependency>
-        <groupId>org.exoplatform.ws</groupId>
+        <groupId>io.meeds.ws</groupId>
         <artifactId>ws-parent</artifactId>
-        <version>${org.exoplatform.ws.version}</version>
+        <version>${io.meeds.ws.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
       <!-- Current project artifacts -->
       <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
+        <groupId>io.meeds.gatein.sso</groupId>
         <artifactId>sso-agent</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.gatein.sso</groupId>
+        <groupId>io.meeds.gatein.sso</groupId>
         <artifactId>sso-saml-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>

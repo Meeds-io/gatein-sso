@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<groupId>org.exoplatform.gatein.sso</groupId>
+		<groupId>io.meeds.gatein.sso</groupId>
 		<artifactId>sso-parent</artifactId>
 		<version>7.0.x-exo-SNAPSHOT</version>
 	</parent>
@@ -22,17 +22,17 @@
       <scope>provided</scope>
     </dependency>
 		<dependency>
-			<groupId>org.exoplatform.core</groupId>
+			<groupId>io.meeds.core</groupId>
 			<artifactId>exo.core.component.organization.api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.exoplatform.gatein.wci</groupId>
+			<groupId>io.meeds.gatein.wci</groupId>
 			<artifactId>wci-wci</artifactId>
 			<scope>provided</scope>
 		</dependency>
     <dependency>
-      <groupId>org.exoplatform.ws</groupId>
+      <groupId>io.meeds.ws</groupId>
       <artifactId>exo.ws.rest.core</artifactId>
       <scope>provided</scope>
     </dependency>
