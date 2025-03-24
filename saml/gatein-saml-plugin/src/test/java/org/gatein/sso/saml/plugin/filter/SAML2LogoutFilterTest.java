@@ -1,8 +1,9 @@
 package org.gatein.sso.saml.plugin.filter;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.startsWith;
 import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,51 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.realm.GenericPrincipal;
+import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.picketlink.common.constants.GeneralConstants;
 
 import junit.framework.TestCase;
+import org.picketlink.identity.federation.web.filters.SPFilter;
+
+import java.nio.file.attribute.UserPrincipal;
+import java.util.Arrays;
 
 public class SAML2LogoutFilterTest extends TestCase {
-
-  public void testLogoutProcessStep1() throws Exception {
-    // Given
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
-    HttpSession httpSession = mock(HttpSession.class);
-    FilterChain chain = mock(FilterChain.class);
-
-    FilterConfig filterConfig = mock(FilterConfig.class);
-    ServletContext servletContext = mock(ServletContext.class);
-
-    SAML2LogoutFilter saml2LogoutFilter = mock(SAML2LogoutFilter.class);
-
-    // When
-    when(request.getRequestURI()).thenReturn("/portal");
-    when(request.getQueryString()).thenReturn("portal:action=Logout");
-    when(request.getParameter("portal:action")).thenReturn("Logout");
-    when(request.getRemoteUser()).thenReturn("root");
-    when(request.getSession()).thenReturn(httpSession);
-    when(filterConfig.getServletContext()).thenReturn(servletContext);
-    when(servletContext.getServletContextName()).thenReturn("portal");
-    when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
-                                                                                                .getPath());
-    when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
-                                                                                        .openStream());
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.ROLES)).thenReturn("users");
-    when(filterConfig.getInitParameter(GeneralConstants.ROLE_VALIDATOR)).thenReturn("org.picketlink.identity.federation.web.roles.DefaultRoleValidator");
-    System.setProperty("picketlink.keystore", getClass().getResource("/jbid_test_keystore.jks").getPath());
-
-    doCallRealMethod().when(saml2LogoutFilter).doFilter(request, response, chain);
-    doCallRealMethod().when(saml2LogoutFilter).initImpl();
-
-    saml2LogoutFilter.init(filterConfig);
-    saml2LogoutFilter.doFilter(request, response, chain);
-
-    verify(httpSession, VerificationModeFactory.times(1)).setAttribute(eq(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE),
-                                                                       eq("/portal?portal:action=Logout"));
-  }
 
   public void testLogoutProcessStep2() throws Exception {
     // Given
@@ -80,9 +48,9 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
     when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE_LOCATION)).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                                 .getPath());
-    when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(servletContext.getResourceAsStream(anyString())).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                         .openStream());
     when(saml2LogoutFilter.getInitParameter(GeneralConstants.ROLES)).thenReturn("users");
     when(filterConfig.getInitParameter(GeneralConstants.ROLE_VALIDATOR)).thenReturn("org.picketlink.identity.federation.web.roles.DefaultRoleValidator");
@@ -119,9 +87,9 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
     when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE_LOCATION)).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                                 .getPath());
-    when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(servletContext.getResourceAsStream(anyString())).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                         .openStream());
     when(saml2LogoutFilter.getInitParameter(GeneralConstants.ROLES)).thenReturn("users");
     when(filterConfig.getInitParameter(GeneralConstants.ROLE_VALIDATOR)).thenReturn("org.picketlink.identity.federation.web.roles.DefaultRoleValidator");

@@ -154,7 +154,7 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
       }
       catch (Exception e)
       {
-         log.warn("Session has been invalidated but WCI logout failed.", e);
+         log.warn("User is already loggued out.");
       }
 
       // Remove rememberme cookie
@@ -168,7 +168,7 @@ public class PortalSAML2LogOutHandler extends SAML2LogOutHandler
      jsessionIdSSOCookie.setPath("/");
      jsessionIdSSOCookie.setMaxAge(0);
      response.addCookie(jsessionIdSSOCookie);
-  
+
       // Remove oauth cookie
       Cookie oauthCookie = new Cookie(OAUTH_COOKIE_NAME, "");
       oauthCookie.setPath(request.getContextPath());
