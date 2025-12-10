@@ -48,7 +48,7 @@
   </modules>
 
   <properties>
-    <io.meeds.ws.version>7.2.x-meed-SNAPSHOT</io.meeds.ws.version>
+    <io.meeds.ws.version>7.2.0-meed-20251210</io.meeds.ws.version>
     <!-- Sonar properties -->
     <sonar.organization>meeds-io</sonar.organization>
     
