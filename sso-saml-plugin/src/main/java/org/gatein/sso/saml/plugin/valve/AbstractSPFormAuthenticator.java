@@ -812,14 +812,13 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * @return
    */
   private List<String> extractGateinRoles(String userId) {
-    OrganizationService organizationService =
-                                            PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+    OrganizationService organizationService = PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
     RolesExtractor rolesExtractor = PortalContainer.getInstance().getComponentInstanceOfType(RolesExtractor.class);
     List<String> result = new ArrayList<>();
     Set<MembershipEntry> entries = new MembershipHashSet();
     Collection<Membership> memberships;
     try {
-      memberships = organizationService.getMembershipHandler().findMembershipsByUser(userId);
+      memberships = organizationService.getMembershipHandler().findMembershipsByUser(userId, true);
     } catch (Exception e) {
       memberships = null;
     }
