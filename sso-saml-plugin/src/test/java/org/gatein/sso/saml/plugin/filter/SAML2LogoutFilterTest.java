@@ -52,9 +52,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     SAML2LogoutFilter saml2LogoutFilter = mock(SAML2LogoutFilter.class);
 
     // When
-    when(request.getRequestURI()).thenReturn("/portal");
-    when(request.getQueryString()).thenReturn("portal:action=Logout");
-    when(request.getParameter("portal:action")).thenReturn("Logout");
+    when(request.getRequestURI()).thenReturn("/portal/logout");
     when(request.getRemoteUser()).thenReturn("root");
     when(request.getSession()).thenReturn(httpSession);
     when(filterConfig.getServletContext()).thenReturn(servletContext);
@@ -75,7 +73,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     saml2LogoutFilter.doFilter(request, response, chain);
 
     verify(httpSession, VerificationModeFactory.times(1)).setAttribute(eq(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE),
-                                                                       eq("/portal?portal:action=Logout"));
+                                                                       eq("/portal/logout"));
   }
 
   public void testLogoutProcessStep2() throws Exception {
@@ -128,10 +126,8 @@ public class SAML2LogoutFilterTest extends TestCase {
     SAML2LogoutFilter saml2LogoutFilter = mock(SAML2LogoutFilter.class);
 
     // When
-    when(request.getRequestURI()).thenReturn("/portal");
-    when(request.getQueryString()).thenReturn("portal:action=Logout");
-    when(request.getParameter("portal:action")).thenReturn("Logout");
-    when(httpSession.getAttribute(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE)).thenReturn("/portal?portal:action=Logout");
+    when(request.getRequestURI()).thenReturn("/portal/logout");
+    when(httpSession.getAttribute(SAML2LogoutFilter.SAML_LOGOUT_ATTRIBUTE)).thenReturn("/portal/logout");
     when(request.getRemoteUser()).thenReturn("root");
     when(request.getSession()).thenReturn(httpSession);
     when(filterConfig.getServletContext()).thenReturn(servletContext);
