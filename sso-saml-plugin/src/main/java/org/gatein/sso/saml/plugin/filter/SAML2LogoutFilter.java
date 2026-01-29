@@ -102,7 +102,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
         };
         // Step 1 : End - logout from the IDP (redirect to IDP logout URL)
         super.doFilter(requestWrapper, servletResponse, new EmptyFilterChain());
-        request.getSession().setAttribute(SAML_LOGOUT_ATTRIBUTE, request.getRequestURI() + "?" + request.getQueryString());
+        request.getSession().setAttribute(SAML_LOGOUT_ATTRIBUTE, request.getRequestURI());
       } else {
         // Step 3 : Call UIPortal.LogoutActionListener
         filterChain.doFilter(servletRequest, servletResponse);
@@ -130,7 +130,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
   }
 
   public static boolean isPortalLogoutInProgress(HttpServletRequest request) {
-    return request.getQueryString() != null && request.getQueryString().contains("portal:action=Logout") && request.getRemoteUser() != null;
+    return request.getRequestURI().equals("/portal/logout") && request.getRemoteUser() != null;
   }
 
   public static boolean isSAMLLogoutInProgress(HttpServletRequest request) {
