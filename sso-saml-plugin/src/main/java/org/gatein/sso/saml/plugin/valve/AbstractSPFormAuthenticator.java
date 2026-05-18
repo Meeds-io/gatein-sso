@@ -868,7 +868,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     if (forceLowerCase.equalsIgnoreCase("true")) {
       username = username.toLowerCase();
     }
-    return new GenericPrincipal(username, null, roles);
+    return new GenericPrincipal(username, roles);
   }
 
   private boolean isAjaxRequest(Request request) {
