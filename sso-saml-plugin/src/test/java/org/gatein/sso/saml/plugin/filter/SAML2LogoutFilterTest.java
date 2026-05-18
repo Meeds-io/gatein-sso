@@ -18,8 +18,8 @@
  */
 package org.gatein.sso.saml.plugin.filter;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.startsWith;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -27,16 +27,15 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.picketlink.common.constants.GeneralConstants;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.picketlink.common.constants.GeneralConstants;
-
 import junit.framework.TestCase;
 
 public class SAML2LogoutFilterTest extends TestCase {
