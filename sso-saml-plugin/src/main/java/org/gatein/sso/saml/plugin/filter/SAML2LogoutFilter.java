@@ -197,7 +197,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
     if (this.servletContextName == null) {
       this.servletContextName = ContainerUtil.getServletContextName(getServletContext());
     }
-    this.configFile = SAMLSPServletContextWrapper.FILE_PREFIX + getInitParameter(GeneralConstants.CONFIG_FILE);
+    this.configFile = getInitParameter("CONFIG_FILE");
     super.init(filterConfig);
   }
 
@@ -256,4 +256,5 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
     }
     return this.config;
   }
+
 }
