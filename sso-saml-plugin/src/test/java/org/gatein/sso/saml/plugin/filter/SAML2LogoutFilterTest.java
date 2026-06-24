@@ -20,7 +20,6 @@ package org.gatein.sso.saml.plugin.filter;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.startsWith;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -39,7 +38,6 @@ import org.mockito.internal.verification.VerificationModeFactory;
 import org.picketlink.common.constants.GeneralConstants;
 
 import junit.framework.TestCase;
-import org.picketlink.identity.federation.web.filters.SPFilter;
 
 public class SAML2LogoutFilterTest extends TestCase {
 
