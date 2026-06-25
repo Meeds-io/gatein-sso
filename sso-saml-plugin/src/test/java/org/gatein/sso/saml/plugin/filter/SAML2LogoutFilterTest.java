@@ -21,7 +21,9 @@ package org.gatein.sso.saml.plugin.filter;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.startsWith;
 import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +51,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     FilterConfig filterConfig = mock(FilterConfig.class);
     ServletContext servletContext = mock(ServletContext.class);
 
-    SAML2LogoutFilter saml2LogoutFilter = mock(SAML2LogoutFilter.class);
+    SAML2LogoutFilter saml2LogoutFilter = spy(new SAML2LogoutFilter());
 
     // When
     when(request.getRequestURI()).thenReturn("/portal/logout");
@@ -58,16 +60,14 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
     when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
-                                                                                                .getPath());
+    doReturn(getClass().getResource("/picketlink-sp.xml")
+                       .getPath()).when(saml2LogoutFilter).getInitParameter("CONFIG_FILE");
     when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                         .openStream());
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.ROLES)).thenReturn("users");
+    doReturn("users").when(saml2LogoutFilter).getInitParameter(GeneralConstants.ROLES);
+
     when(filterConfig.getInitParameter(GeneralConstants.ROLE_VALIDATOR)).thenReturn("org.picketlink.identity.federation.web.roles.DefaultRoleValidator");
     System.setProperty("picketlink.keystore", getClass().getResource("/jbid_test_keystore.jks").getPath());
-
-    doCallRealMethod().when(saml2LogoutFilter).doFilter(request, response, chain);
-    doCallRealMethod().when(saml2LogoutFilter).initImpl();
 
     saml2LogoutFilter.init(filterConfig);
     saml2LogoutFilter.doFilter(request, response, chain);
@@ -96,7 +96,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
     when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(saml2LogoutFilter.getInitParameter("CONFIG_FILE")).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                                 .getPath());
     when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                         .openStream());
@@ -133,7 +133,7 @@ public class SAML2LogoutFilterTest extends TestCase {
     when(filterConfig.getServletContext()).thenReturn(servletContext);
     when(servletContext.getServletContextName()).thenReturn("portal");
     when(servletContext.getContextPath()).thenReturn("/portal");
-    when(saml2LogoutFilter.getInitParameter(GeneralConstants.CONFIG_FILE)).thenReturn(getClass().getResource("/picketlink-sp.xml")
+    when(saml2LogoutFilter.getInitParameter("CONFIG_FILE")).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                                 .getPath());
     when(servletContext.getResourceAsStream(startsWith("file:/"))).thenReturn(getClass().getResource("/picketlink-sp.xml")
                                                                                         .openStream());

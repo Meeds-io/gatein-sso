@@ -134,9 +134,9 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/auth
  import javax.security.jacc.PolicyContext;
 -import javax.servlet.http.HttpServletRequest;
 +import jakarta.servlet.http.HttpServletRequest;
- 
- import org.jboss.security.auth.spi.AbstractServerLoginModule;
- import org.picketlink.common.PicketLinkLogger;
+ import java.util.Map;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern; 
 @@ -98,7 +98,7 @@
       */
      public static final String BASE64_TOKEN_ENCODING = "base64"; 
@@ -162,9 +162,9 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/bindings/jboss/role
              //Use JACC to get the request
              try {
                  HttpServletRequest request =
--                        (HttpServletRequest) PolicyContext.getContext("javax.servlet.http.HttpServletRequest");
-+                        (HttpServletRequest) PolicyContext.getContext("jakarta.servlet.http.HttpServletRequest");
-                 if(request instanceof Request){
+-                    (HttpServletRequest) PolicyContext.getContext("javax.servlet.http.HttpServletRequest");
++                    (HttpServletRequest) PolicyContext.getContext("jakarta.servlet.http.HttpServletRequest");
+                 if (request instanceof Request) {
                      Request catalinaRequest  = (Request) request;
                      return super.generateRoles(catalinaRequest.getPrincipal());
 diff -uNr picketlink-orig/org/picketlink/identity/federation/core/audit/PicketLinkAuditHelper.java picketlink/org/picketlink/identity/federation/core/audit/PicketLinkAuditHelper.java
@@ -240,29 +240,6 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/core/util/CoreConfi
  import java.io.UnsupportedEncodingException;
  import java.security.GeneralSecurityException;
  import java.security.PublicKey;
-diff -uNr picketlink-orig/org/picketlink/identity/federation/web/config/IdentityURLConfigurationProvider.java picketlink/org/picketlink/identity/federation/web/config/IdentityURLConfigurationProvider.java
---- picketlink-orig/org/picketlink/identity/federation/web/config/IdentityURLConfigurationProvider.java	2023-12-17 08:04:43.388951982 +0100
-+++ picketlink/org/picketlink/identity/federation/web/config/IdentityURLConfigurationProvider.java	2023-12-17 08:05:07.572987479 +0100
-@@ -1,6 +1,6 @@
- package org.picketlink.identity.federation.web.config;
- 
--import javax.servlet.ServletContext;
-+import jakarta.servlet.ServletContext;
- import java.io.IOException;
- import java.util.Map;
- 
-diff -uNr picketlink-orig/org/picketlink/identity/federation/web/config/PropertiesIdentityURLProvider.java picketlink/org/picketlink/identity/federation/web/config/PropertiesIdentityURLProvider.java
---- picketlink-orig/org/picketlink/identity/federation/web/config/PropertiesIdentityURLProvider.java	2023-12-17 08:04:43.388951982 +0100
-+++ picketlink/org/picketlink/identity/federation/web/config/PropertiesIdentityURLProvider.java	2023-12-17 08:05:07.572987479 +0100
-@@ -17,7 +17,7 @@
-  */
- package org.picketlink.identity.federation.web.config;
- 
--import javax.servlet.ServletContext;
-+import jakarta.servlet.ServletContext;
- import java.io.IOException;
- import java.io.InputStream;
- import java.util.HashMap;
 diff -uNr picketlink-orig/org/picketlink/identity/federation/web/core/HTTPContext.java picketlink/org/picketlink/identity/federation/web/core/HTTPContext.java
 --- picketlink-orig/org/picketlink/identity/federation/web/core/HTTPContext.java	2023-12-17 08:04:43.388951982 +0100
 +++ picketlink/org/picketlink/identity/federation/web/core/HTTPContext.java	2023-12-17 08:05:07.572987479 +0100
@@ -328,9 +305,9 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/web/filters/IDPFilt
 +import jakarta.servlet.http.HttpServletRequestWrapper;
 +import jakarta.servlet.http.HttpServletResponse;
 +import jakarta.servlet.http.HttpSession;
- 
- import static org.picketlink.common.constants.GeneralConstants.AUDIT_HELPER;
- import static org.picketlink.common.constants.GeneralConstants.CONFIGURATION;
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+ import java.io.File; 
 @@ -134,7 +134,7 @@
  import static org.picketlink.common.util.StringUtil.isNullOrEmpty;
  
@@ -365,6 +342,7 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/web/filters/SPFilte
 -import javax.servlet.ServletRequest;
 -import javax.servlet.ServletResponse;
 -import javax.servlet.http.HttpServletRequest;
+-import javax.servlet.http.HttpServletRequestWrapper;
 -import javax.servlet.http.HttpServletResponse;
 -import javax.servlet.http.HttpSession;
 +import jakarta.servlet.Filter;
@@ -376,11 +354,12 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/web/filters/SPFilte
 +import jakarta.servlet.ServletRequest;
 +import jakarta.servlet.ServletResponse;
 +import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletRequestWrapper;
 +import jakarta.servlet.http.HttpServletResponse;
 +import jakarta.servlet.http.HttpSession;
- import javax.xml.crypto.MarshalException;
  import javax.xml.crypto.dsig.CanonicalizationMethod;
- import javax.xml.crypto.dsig.XMLSignatureException;
+ import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
 diff -uNr picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/BaseSAML2Handler.java picketlink/org/picketlink/identity/federation/web/handlers/saml2/BaseSAML2Handler.java
 --- picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/BaseSAML2Handler.java	2023-12-17 08:04:43.384951976 +0100
 +++ picketlink/org/picketlink/identity/federation/web/handlers/saml2/BaseSAML2Handler.java	2023-12-17 08:05:07.572987479 +0100
@@ -449,18 +428,20 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/
 --- picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/SAML2LogOutHandler.java	2023-12-17 08:04:43.384951976 +0100
 +++ picketlink/org/picketlink/identity/federation/web/handlers/saml2/SAML2LogOutHandler.java	2023-12-17 08:05:07.572987479 +0100
 @@ -48,9 +48,9 @@
- import org.picketlink.identity.federation.web.core.IdentityServer;
- import org.picketlink.identity.federation.web.util.RedirectBindingUtil;
- 
+ import javax.net.ssl.SSLSession;
+ import javax.net.ssl.TrustManager;
+ import javax.net.ssl.X509TrustManager;
 -import javax.servlet.ServletContext;
 -import javax.servlet.http.HttpServletRequest;
+-import javax.servlet.http.HttpServletResponse;
 -import javax.servlet.http.HttpSession;
 +import jakarta.servlet.ServletContext;
 +import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletResponse;
 +import jakarta.servlet.http.HttpSession;
  import javax.xml.parsers.ParserConfigurationException;
+ import java.io.DataOutputStream;
  import java.io.IOException;
- import java.net.URI;
 diff -uNr picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/SAML2SignatureValidationHandler.java picketlink/org/picketlink/identity/federation/web/handlers/saml2/SAML2SignatureValidationHandler.java
 --- picketlink-orig/org/picketlink/identity/federation/web/handlers/saml2/SAML2SignatureValidationHandler.java	2023-12-17 08:04:43.384951976 +0100
 +++ picketlink/org/picketlink/identity/federation/web/handlers/saml2/SAML2SignatureValidationHandler.java	2023-12-17 08:05:07.572987479 +0100
@@ -649,18 +630,6 @@ diff -uNr picketlink-orig/org/picketlink/identity/federation/web/servlets/saml/S
  import javax.xml.soap.SOAPBody;
  import javax.xml.soap.SOAPEnvelope;
  import javax.xml.soap.SOAPException;
-diff -uNr picketlink-orig/org/picketlink/identity/federation/web/util/ConfigurationUtil.java picketlink/org/picketlink/identity/federation/web/util/ConfigurationUtil.java
---- picketlink-orig/org/picketlink/identity/federation/web/util/ConfigurationUtil.java	2023-12-17 08:04:43.384951976 +0100
-+++ picketlink/org/picketlink/identity/federation/web/util/ConfigurationUtil.java	2023-12-17 08:05:07.572987479 +0100
-@@ -36,7 +36,7 @@
- import org.picketlink.identity.federation.core.audit.PicketLinkAuditHelper;
- import org.picketlink.identity.federation.web.config.AbstractSAMLConfigurationProvider;
- 
--import javax.servlet.ServletContext;
-+import jakarta.servlet.ServletContext;
- 
- import static org.picketlink.common.constants.GeneralConstants.AUDIT_HELPER;
- import static org.picketlink.common.constants.GeneralConstants.CONFIG_FILE_LOCATION;
 diff -uNr picketlink-orig/org/picketlink/identity/federation/web/util/HTTPRedirectUtil.java picketlink/org/picketlink/identity/federation/web/util/HTTPRedirectUtil.java
 --- picketlink-orig/org/picketlink/identity/federation/web/util/HTTPRedirectUtil.java	2023-12-17 08:04:43.384951976 +0100
 +++ picketlink/org/picketlink/identity/federation/web/util/HTTPRedirectUtil.java	2023-12-17 08:05:07.572987479 +0100
@@ -811,3 +780,105 @@ diff -uNr picketlink-orig/org/picketlink/trust/jbossws/PicketLinkDispatch.java p
  
          HttpServletRequest request = null;
          try {
+diff -uNr picketlink-orig/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java picketlink/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java
+--- picketlink-orig/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java        2026-06-23 15:16:57.404952006 +0100 
++++ picketlink/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java        2026-06-23 15:16:57.404952006 +0100
+@@ -25,12 +25,12 @@
+ import org.apache.catalina.authenticator.FormAuthenticator;
+ import org.apache.catalina.connector.Request;
+ import org.apache.catalina.connector.Response;
+-import org.apache.catalina.deploy.LoginConfig;
+-import org.apache.log4j.Logger;
+-import org.picketlink.common.util.StringUtil;
+-  
+-import javax.servlet.http.HttpServletRequest;
+-import javax.servlet.http.HttpServletResponse;
+-import javax.servlet.http.HttpSession;
++import org.apache.tomcat.util.descriptor.web.LoginConfig;
++import org.apache.log4j.Logger;
++import org.picketlink.common.util.StringUtil;
++
++import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletResponse;
++import jakarta.servlet.http.HttpSession;
+ import java.io.IOException;
+ import java.lang.reflect.Method;
+ import java.security.Principal;
+diff -uNr picketlink-orig/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java picketlink/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java
+--- picketlink-orig/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java        2026-06-23 15:16:57.404952006 +0100 
++++ picketlink/org/picketlink/social/openid/OpenIDConsumerAuthenticator.java        2026-06-23 15:16:57.404952006 +0100
+@@ -208,7 +208,7 @@
+ 
+     protected void registerWithAuthenticatorBase(Request request, Response response, Principal principal, String userName) {
+         try {
+-            register(request, response, principal, Constants.FORM_METHOD, userName, "");
++            register(request, response, principal, HttpServletRequest.FORM_AUTH, userName, "");
+         } catch (NoSuchMethodError nse) {
+             if (theSuperRegisterMethod == null) {
+                 Class<?>[] args = new Class[]{Request.class, HttpServletResponse.class, Principal.class, String.class,
+@@ -217,7 +217,7 @@
+                 theSuperRegisterMethod = SecurityActions.getMethod(superClass, "register", args);
+             }
+             if (theSuperRegisterMethod != null) {
+-                Object[] objectArgs = new Object[]{request, response.getResponse(), principal, Constants.FORM_METHOD,
++                Object[] objectArgs = new Object[]{request, response.getResponse(), principal, HttpServletRequest.FORM_AUTH,
+                     userName, OpenIDProcessor.EMPTY_PASSWORD};
+                 try {
+                     theSuperRegisterMethod.invoke(this, objectArgs);
+diff -uNr picketlink-orig/org/picketlink/social/openid/OpenIDProcessor.java picketlink/org/picketlink/social/openid/OpenIDProcessor.java
+--- picketlink-orig/org/picketlink/social/openid/OpenIDProcessor.java        2026-06-23 15:16:57.404952006 +0100 
++++ picketlink/org/picketlink/social/openid/OpenIDProcessor.java        2026-06-23 15:16:57.404952006 +0100
+@@ -43,7 +43,7 @@
+ import org.picketlink.social.standalone.oauth.OpenIDAliasMapper;
+ import org.picketlink.social.standalone.oauth.OpenIdPrincipal;
+ 
+-import javax.servlet.http.HttpServletResponse;
++import jakarta.servlet.http.HttpServletResponse;
+ import java.io.IOException;
+ import java.net.URL;
+ import java.security.Principal;
+@@ -208,7 +208,7 @@
+                 principal = realm.authenticate(principalName, EMPTY_PASSWORD);
+             } else {
+                 // Create a Tomcat Generic Principal
+-                principal = new GenericPrincipal(realm, principalName, null, roles, openIDPrincipal);
++                principal = new GenericPrincipal(principalName, null, roles, openIDPrincipal);
+             }
+ 
+             if (trace) {
+diff -uNr picketlink-orig/org/picketlink/identity/federation/web/core/SessionManager.java picketlink/org/picketlink/identity/federation/web/core/SessionManager.java
+--- picketlink-orig/org/picketlink/identity/federation/web/core/SessionManager.java        2026-06-23 15:16:57.404952006 +0100 
++++ picketlink/org/picketlink/identity/federation/web/core/SessionManager.java        2026-06-23 15:16:57.404952006 +0100
+@@ -26,10 +26,10 @@
+ 
+ import org.picketlink.common.constants.GeneralConstants;
+ 
+-import javax.servlet.ServletContext;
+-import javax.servlet.http.HttpSession;
+-import javax.servlet.http.HttpSessionEvent;
+-import javax.servlet.http.HttpSessionListener;
++import jakarta.servlet.ServletContext;
++import jakarta.servlet.http.HttpSession;
++import jakarta.servlet.http.HttpSessionEvent;
++import jakarta.servlet.http.HttpSessionListener;
+ import java.security.Principal;
+ import java.util.Collections;
+ import java.util.HashMap;
+diff -uNr picketlink-orig/org/picketlink/identity/federation/web/filters/ServiceProviderContextInitializer.java picketlink/org/picketlink/identity/federation/web/filters/ServiceProviderContextInitializer.java
+--- picketlink-orig/org/picketlink/identity/federation/web/filters/ServiceProviderContextInitializer.java        2026-06-23 15:16:57.404952006 +0100 
++++ picketlink/org/picketlink/identity/federation/web/filters/ServiceProviderContextInitializer.java        2026-06-23 15:16:57.404952006 +0100
+@@ -26,10 +26,10 @@
+ 
+ import org.picketlink.identity.federation.web.core.SessionManager;
+ 
+-import javax.servlet.ServletContext;
+-import javax.servlet.ServletContextEvent;
+-import javax.servlet.ServletContextListener;
+-import javax.servlet.http.HttpSessionListener;
++import jakarta.servlet.ServletContext;
++import jakarta.servlet.ServletContextEvent;
++import jakarta.servlet.ServletContextListener;
++import jakarta.servlet.http.HttpSessionListener; 
+
+ /**
+  * @author Pedro Igor

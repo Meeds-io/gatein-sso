@@ -791,3 +791,15 @@ diff -uNr picketlink-orig/org/picketlink/trust/jbossws/util/SecurityActions.java
  import java.util.List;
  
  import javax.security.auth.Subject;
+diff -uNr picketlink-orig/org/picketlink/social/openid/OpenIDLoginModule.java picketlink/org/picketlink/social/openid/OpenIDLoginModule.java
+--- picketlink-orig/org/picketlink/social/openid/OpenIDLoginModule.java      2023-12-17 08:04:11.732905768 +0100
++++ picketlink/org/picketlink/social/openid/OpenIDLoginModule.java   2024-12-17 08:04:43.352951930 +0100
+@@ -26,7 +26,7 @@
+ 
+ import javax.security.auth.login.LoginException;
+ import java.security.Principal;
+-import java.security.acl.Group;
++import org.jboss.security.Group;
+ import java.util.List;
+ 
+ /**
