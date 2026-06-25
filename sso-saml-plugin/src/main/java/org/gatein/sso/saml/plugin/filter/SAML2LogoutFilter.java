@@ -23,7 +23,6 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.gatein.sso.agent.filter.api.SSOInterceptor;
 import org.gatein.sso.agent.filter.api.SSOInterceptorInitializationContext;
-import org.picketlink.common.constants.GeneralConstants;
 import org.picketlink.identity.federation.web.filters.SPFilter;
 
 import org.exoplatform.container.ExoContainer;
@@ -197,7 +196,7 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
     if (this.servletContextName == null) {
       this.servletContextName = ContainerUtil.getServletContextName(getServletContext());
     }
-    this.configFile = SAMLSPServletContextWrapper.FILE_PREFIX + getInitParameter(GeneralConstants.CONFIG_FILE);
+    this.configFile = getInitParameter("CONFIG_FILE");
     super.init(filterConfig);
   }
 
@@ -256,4 +255,5 @@ public class SAML2LogoutFilter extends SPFilter implements SSOInterceptor {
     }
     return this.config;
   }
+
 }
