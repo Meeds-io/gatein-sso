@@ -842,7 +842,7 @@ diff -uNr picketlink-orig/org/picketlink/social/openid/OpenIDProcessor.java pick
              } else {
                  // Create a Tomcat Generic Principal
 -                principal = new GenericPrincipal(realm, principalName, null, roles, openIDPrincipal);
-+                principal = new GenericPrincipal(principalName, null, roles, openIDPrincipal);
++                principal = new GenericPrincipal(principalName, roles, openIDPrincipal);
              }
  
              if (trace) {
