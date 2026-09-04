@@ -38,7 +38,7 @@
     <org.picketlink.social.version>2.7.0.Final</org.picketlink.social.version>
     <org.picketbox.version>4.0.20.Final</org.picketbox.version>
     <javax.transaction.version>1.3</javax.transaction.version>
-    <org.apache.santuario.version>1.5.1</org.apache.santuario.version>
+    <org.apache.santuario.version>2.2.6</org.apache.santuario.version>
     <org.jboss.security.jbossxacml.version>2.0.8.Final</org.jboss.security.jbossxacml.version>
     <org.jboss.security.jbosssx.version>2.0.4</org.jboss.security.jbosssx.version>
     <org.jboss.jbossxb.version>2.0.3.GA</org.jboss.jbossxb.version>
