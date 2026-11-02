@@ -205,11 +205,6 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>sso-agent</artifactId>
       </dependency>
-    <!-- Tomcat-->
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat-catalina</artifactId>
-    </dependency>
     <!-- Picketlink and Picketbox artifacts to override -->
     <dependency>
       <groupId>org.picketlink</groupId>
@@ -245,11 +240,6 @@
       <classifier>sources</classifier>
     </dependency>
     <!-- For javax.peristence-api transitive artifact dependency -->
-    <dependency>
-      <groupId>io.meeds.ws</groupId>
-      <artifactId>exo.ws.rest.core</artifactId>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
