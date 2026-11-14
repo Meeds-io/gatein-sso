@@ -48,6 +48,8 @@
   </modules>
 
   <properties>
+    <!-- Compile against the JDK 21 API whatever JDK runs the build: the patched PicketLink sources use members later JDKs removed -->
+    <maven.compiler.release>21</maven.compiler.release>
     <io.meeds.ws.version>7.3.x-maintenance-SNAPSHOT</io.meeds.ws.version>
     <!-- Sonar properties -->
     <sonar.organization>meeds-io</sonar.organization>
