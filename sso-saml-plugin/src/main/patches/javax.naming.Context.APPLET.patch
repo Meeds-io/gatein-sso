@@ -1,0 +1,24 @@
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/LdapExtLoginModule.java picketlink/org/jboss/security/auth/spi/LdapExtLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/LdapExtLoginModule.java	2026-11-14 13:06:49.709501114 +0100
++++ picketlink/org/jboss/security/auth/spi/LdapExtLoginModule.java	2026-11-14 13:06:49.716020941 +0100
+@@ -208,7 +208,7 @@
+       Context.SECURITY_PRINCIPAL,
+       Context.SECURITY_CREDENTIALS,
+       Context.LANGUAGE,
+-      Context.APPLET
++      "java.naming.applet" // Context.APPLET, removed from JDK 25
+    };
+    
+    protected String bindDN;
+diff -uNr picketlink-orig/org/jboss/security/auth/spi/LdapLoginModule.java picketlink/org/jboss/security/auth/spi/LdapLoginModule.java
+--- picketlink-orig/org/jboss/security/auth/spi/LdapLoginModule.java	2026-11-14 13:06:49.700802848 +0100
++++ picketlink/org/jboss/security/auth/spi/LdapLoginModule.java	2026-11-14 13:06:49.706709386 +0100
+@@ -217,7 +217,7 @@
+       Context.SECURITY_PRINCIPAL,
+       Context.SECURITY_CREDENTIALS,
+       Context.LANGUAGE,
+-      Context.APPLET
++      "java.naming.applet" // Context.APPLET, removed from JDK 25
+    };
+    
+    public LdapLoginModule()
