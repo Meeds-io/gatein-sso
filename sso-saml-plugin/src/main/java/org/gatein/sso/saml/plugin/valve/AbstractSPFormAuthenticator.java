@@ -355,7 +355,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
                  (String) session.getNote(Constants.SESS_PASSWORD_NOTE));
 
         // try to restore the original request (including post data, etc...)
-        if (restoreRequest(request, session)) {
+        if (restoreRequest(request, session).getAuthenticated()) {
           // success! user is authenticated; continue processing original
           // request
           logger.trace("Continuing with restored request.");
@@ -846,7 +846,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
   }
 
   @Override
-  public boolean restoreRequest(Request request, Session session) throws IOException {
+  public AuthenticationResult restoreRequest(Request request, Session session) throws IOException {
     return super.restoreRequest(request, session);
   }
 
