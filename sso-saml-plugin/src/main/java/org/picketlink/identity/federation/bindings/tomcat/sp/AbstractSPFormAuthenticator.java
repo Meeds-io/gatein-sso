@@ -20,7 +20,7 @@ package org.picketlink.identity.federation.bindings.tomcat.sp;
 
 import static org.picketlink.common.util.StringUtil.isNotNull;
 import static org.picketlink.common.util.StringUtil.isNullOrEmpty;
-import static org.picketlink.identity.federation.bindings.tomcat.sp.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponse;
+import static org.picketlink.identity.federation.bindings.tomcat.sp.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponseExtended;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -295,7 +295,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    *           response object
    */
   public boolean authenticate(Request request, HttpServletResponse response) throws IOException {
-    return doAuthenticate(request, response);
+    // Just authenticating so no requirement to refresh constraints
+    return doAuthenticateExtended(request, response).getAuthenticated();
   }
 
   /*
@@ -306,7 +307,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * org.apache.tomcat.util.descriptor.web.LoginConfig)
    */
   @Override
-  protected boolean doAuthenticate(Request request, HttpServletResponse response) throws IOException {
+  protected AuthenticationResult doAuthenticateExtended(Request request, HttpServletResponse response) throws IOException {
     try {
       // needs to be done first, *before* accessing any parameters.
       // super.authenticate(..) gets called to late
@@ -332,17 +333,18 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
                  (String) session.getNote(Constants.SESS_PASSWORD_NOTE));
 
         // try to restore the original request (including post data, etc...)
-        if (restoreRequest(request, session)) {
+        AuthenticationResult restoreResult = restoreRequest(request, session);
+        if (restoreResult.getAuthenticated()) {
           // success! user is authenticated; continue processing original
-          // request
+          // request, with its security constraints refreshed if its method
+          // changed
           logger.trace("Continuing with restored request.");
-          return true;
         } else {
           // no saved request found...
           logger.trace("Restore of original request failed!");
           response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-          return false;
         }
+        return restoreResult;
       }
 
       // Eagerly look for Local LogOut
@@ -355,7 +357,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
           logger.samlLogoutError(e);
           throw new IOException(e);
         }
-        return false;
+        return AuthenticationResult.FAILED;
       }
 
       String samlRequest = request.getParameter(GeneralConstants.SAML_REQUEST_KEY);
@@ -366,11 +368,11 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
       // If we have already authenticated the user and there is no request from
       // IDP or logout from user
       if (principal != null && !(isGlobalLogout(request) || isNotNull(samlRequest) || isNotNull(samlResponse)))
-        return true;
+        return AuthenticationResult.PASSED;
 
       // General User Request
       if (!isNotNull(samlRequest) && !isNotNull(samlResponse)) {
-        return generalUserRequest(request, response);
+        return toAuthenticationResult(generalUserRequest(request, response));
       }
 
       // Handle a SAML Response from IDP
@@ -380,10 +382,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
       // Handle SAML Requests from IDP
       if (isNotNull(samlRequest)) {
-        return handleSAMLRequest(request, response);
+        return toAuthenticationResult(handleSAMLRequest(request, response));
       } // end if
 
-      return localAuthentication(request, response);
+      return toAuthenticationResult(localAuthentication(request, response));
     } catch (IOException e) {
       if (StringUtil.isNotNull(spConfiguration.getErrorPage())) {
         try {
@@ -391,11 +393,15 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
         } catch (ServletException e1) {
           logger.samlErrorPageForwardError(spConfiguration.getErrorPage(), e1);
         }
-        return false;
+        return AuthenticationResult.FAILED;
       } else {
         throw e;
       }
     }
+  }
+
+  private static AuthenticationResult toAuthenticationResult(boolean authenticated) {
+    return authenticated ? AuthenticationResult.PASSED : AuthenticationResult.FAILED;
   }
 
   /**
@@ -497,7 +503,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * @return
    * @throws IOException
    */
-  private boolean handleSAMLResponse(Request request, HttpServletResponse response) throws IOException {
+  private AuthenticationResult handleSAMLResponse(Request request, HttpServletResponse response) throws IOException {
     if (!super.validate(request)) {
       throw new IOException(ErrorCodes.VALIDATION_CHECK_FAILED);
     }
@@ -505,10 +511,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     String samlVersion = getSAMLVersion(request);
 
     if (!JBossSAMLConstants.VERSION_2_0.get().equals(samlVersion)) {
-      return handleSAML11UnsolicitedResponse(request, response, this);
+      return handleSAML11UnsolicitedResponseExtended(request, response, this);
     }
 
-    return handleSAML2Response(request, response);
+    return toAuthenticationResult(handleSAML2Response(request, response));
   }
 
   private boolean handleSAML2Response(Request request, HttpServletResponse response) throws IOException {
@@ -783,7 +789,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
   }
 
   @Override
-  public boolean restoreRequest(Request request, Session session) throws IOException {
+  public AuthenticationResult restoreRequest(Request request, Session session) throws IOException {
     return super.restoreRequest(request, session);
   }
 
