@@ -18,7 +18,7 @@
  */
 package org.gatein.sso.saml.plugin.valve;
 
-import static org.gatein.sso.saml.plugin.valve.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponse;
+import static org.gatein.sso.saml.plugin.valve.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponseExtended;
 import static org.picketlink.common.util.StringUtil.isNotNull;
 import static org.picketlink.common.util.StringUtil.isNullOrEmpty;
 
@@ -400,7 +400,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
       // Handle a SAML Response from IDP
       if (isNotNull(samlResponse)) {
-        return toAuthenticationResult(handleSAMLResponse(request, response, loginConfig));
+        return handleSAMLResponse(request, response, loginConfig);
       }
 
       // Handle SAML Requests from IDP
@@ -534,7 +534,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * @return true if logged in in SAML SP side
    * @throws IOException any I/O error in authentication process
    */
-  private boolean handleSAMLResponse(Request request, Response response, LoginConfig loginConfig) throws IOException {
+  private AuthenticationResult handleSAMLResponse(Request request, Response response, LoginConfig loginConfig) throws IOException {
     if (!super.validate(request)) {
       throw new IOException(ErrorCodes.VALIDATION_CHECK_FAILED);
     }
@@ -542,10 +542,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     String samlVersion = getSAMLVersion(request);
 
     if (!JBossSAMLConstants.VERSION_2_0.get().equals(samlVersion)) {
-      return handleSAML11UnsolicitedResponse(request, response, loginConfig, this);
+      return handleSAML11UnsolicitedResponseExtended(request, response, loginConfig, this);
     }
 
-    return handleSAML2Response(request, response, loginConfig);
+    return toAuthenticationResult(handleSAML2Response(request, response, loginConfig));
   }
 
   private boolean handleSAML2Response(Request request, Response response, LoginConfig loginConfig) throws IOException {

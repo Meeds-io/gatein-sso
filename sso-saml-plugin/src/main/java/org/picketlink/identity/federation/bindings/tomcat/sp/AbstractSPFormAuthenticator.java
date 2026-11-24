@@ -20,7 +20,7 @@ package org.picketlink.identity.federation.bindings.tomcat.sp;
 
 import static org.picketlink.common.util.StringUtil.isNotNull;
 import static org.picketlink.common.util.StringUtil.isNullOrEmpty;
-import static org.picketlink.identity.federation.bindings.tomcat.sp.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponse;
+import static org.picketlink.identity.federation.bindings.tomcat.sp.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponseExtended;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -377,7 +377,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
       // Handle a SAML Response from IDP
       if (isNotNull(samlResponse)) {
-        return toAuthenticationResult(handleSAMLResponse(request, response));
+        return handleSAMLResponse(request, response);
       }
 
       // Handle SAML Requests from IDP
@@ -503,7 +503,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * @return
    * @throws IOException
    */
-  private boolean handleSAMLResponse(Request request, HttpServletResponse response) throws IOException {
+  private AuthenticationResult handleSAMLResponse(Request request, HttpServletResponse response) throws IOException {
     if (!super.validate(request)) {
       throw new IOException(ErrorCodes.VALIDATION_CHECK_FAILED);
     }
@@ -511,10 +511,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     String samlVersion = getSAMLVersion(request);
 
     if (!JBossSAMLConstants.VERSION_2_0.get().equals(samlVersion)) {
-      return handleSAML11UnsolicitedResponse(request, response, this);
+      return handleSAML11UnsolicitedResponseExtended(request, response, this);
     }
 
-    return handleSAML2Response(request, response);
+    return toAuthenticationResult(handleSAML2Response(request, response));
   }
 
   private boolean handleSAML2Response(Request request, HttpServletResponse response) throws IOException {

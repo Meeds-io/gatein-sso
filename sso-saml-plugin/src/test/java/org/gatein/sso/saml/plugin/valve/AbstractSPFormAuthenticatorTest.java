@@ -23,14 +23,20 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.Base64;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Session;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.picketlink.common.constants.GeneralConstants;
 
 import jakarta.servlet.http.HttpServletResponse;
 import junit.framework.TestCase;
@@ -75,6 +81,70 @@ public class AbstractSPFormAuthenticatorTest extends TestCase {
     assertFalse(authenticator.authenticate(request, response));
   }
 
+  public void testSaml11ResponseKeepsConstraintsRefresh() throws Exception {
+    RestoringAuthenticator authenticator = new RestoringAuthenticator("PASSED_CONSTRAINTS_NEED_REFRESH");
+    authenticator.matches = false;
+    when(request.getParameter(GeneralConstants.SAML_RESPONSE_KEY)).thenReturn(saml11Response());
+
+    assertEquals("PASSED_CONSTRAINTS_NEED_REFRESH", authenticator.authenticateExtended(request, response));
+    assertTrue(authenticator.registered);
+    assertTrue(authenticator.authenticate(request, response));
+  }
+
+  public void testSaml11ResponsePassedWhenRestorePassed() throws Exception {
+    RestoringAuthenticator authenticator = new RestoringAuthenticator("PASSED");
+    authenticator.matches = false;
+    when(request.getParameter(GeneralConstants.SAML_RESPONSE_KEY)).thenReturn(saml11Response());
+
+    assertEquals("PASSED", authenticator.authenticateExtended(request, response));
+    assertTrue(authenticator.registered);
+  }
+
+  public void testSaml11ResponsePassedWhenRestoreFailed() throws Exception {
+    RestoringAuthenticator authenticator = new RestoringAuthenticator("FAILED");
+    authenticator.matches = false;
+    when(request.getParameter(GeneralConstants.SAML_RESPONSE_KEY)).thenReturn(saml11Response());
+
+    assertEquals("PASSED", authenticator.authenticateExtended(request, response));
+    assertTrue(authenticator.registered);
+  }
+
+  public void testAlreadyAuthenticatedRequestPassed() throws Exception {
+    RestoringAuthenticator authenticator = new RestoringAuthenticator("FAILED");
+    authenticator.matches = false;
+    when(request.getUserPrincipal()).thenReturn(mock(Principal.class));
+
+    assertEquals("PASSED", authenticator.authenticateExtended(request, response));
+    assertFalse(authenticator.registered);
+  }
+
+  public void testLocalLogoutFailed() throws Exception {
+    RestoringAuthenticator authenticator = new RestoringAuthenticator("PASSED");
+    authenticator.matches = false;
+    when(request.getParameter(GeneralConstants.LOCAL_LOGOUT)).thenReturn("true");
+
+    assertEquals("FAILED", authenticator.authenticateExtended(request, response));
+    assertTrue(authenticator.loggedOut);
+    assertFalse(authenticator.authenticate(request, response));
+  }
+
+  private static String saml11Response() throws IOException {
+    String xml = "<samlp:Response xmlns:samlp=\"urn:oasis:names:tc:SAML:1.0:protocol\" "
+        + "ResponseID=\"_response1\" MajorVersion=\"1\" MinorVersion=\"1\" IssueInstant=\"2026-01-01T00:00:00Z\">"
+        + "<saml:Assertion xmlns:saml=\"urn:oasis:names:tc:SAML:1.0:assertion\" AssertionID=\"_assertion1\" "
+        + "MajorVersion=\"1\" MinorVersion=\"1\" Issuer=\"idp\" IssueInstant=\"2026-01-01T00:00:00Z\">"
+        + "<saml:AuthenticationStatement AuthenticationMethod=\"urn:oasis:names:tc:SAML:1.0:am:password\" "
+        + "AuthenticationInstant=\"2026-01-01T00:00:00Z\">"
+        + "<saml:Subject><saml:NameIdentifier>john</saml:NameIdentifier></saml:Subject>"
+        + "</saml:AuthenticationStatement>"
+        + "</saml:Assertion></samlp:Response>";
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    try (DeflaterOutputStream deflater = new DeflaterOutputStream(bytes, new Deflater(Deflater.DEFAULT_COMPRESSION, true))) {
+      deflater.write(xml.getBytes(StandardCharsets.UTF_8));
+    }
+    return Base64.getEncoder().encodeToString(bytes.toByteArray());
+  }
+
   /**
    * A service provider valve whose request matches the one saved before the
    * IDP round trip, and whose restore outcome is fixed by the test.
@@ -84,6 +154,10 @@ public class AbstractSPFormAuthenticatorTest extends TestCase {
     private final AuthenticationResult restoreResult;
 
     private boolean                    registered;
+
+    private boolean                    matches  = true;
+
+    private boolean                    loggedOut;
 
     RestoringAuthenticator(String restoreResult) {
       this.restoreResult = AuthenticationResult.valueOf(restoreResult);
@@ -95,7 +169,12 @@ public class AbstractSPFormAuthenticatorTest extends TestCase {
 
     @Override
     protected boolean matchRequest(Request request) {
-      return true;
+      return matches;
+    }
+
+    @Override
+    protected void sendToLogoutPage(Request request, Response response, Session session) {
+      loggedOut = true;
     }
 
     @Override
