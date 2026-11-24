@@ -72,13 +72,23 @@ public abstract class AbstractSAML11SPRedirectFormAuthenticator extends Abstract
     }
 
     public static boolean handleSAML11UnsolicitedResponse(Request request, HttpServletResponse response, LoginConfig loginConfig, AbstractSPFormAuthenticator formAuthenticator) throws IOException {
+        return handleSAML11UnsolicitedResponseExtended(request, response, loginConfig, formAuthenticator).getAuthenticated();
+    }
+
+    /**
+     * Handles a SAML 1.1 response and keeps the outcome of the restore of the
+     * saved request: {@code PASSED_CONSTRAINTS_NEED_REFRESH} when
+     * {@code restoreRequest} returned it, {@code PASSED} for any other
+     * authenticated outcome and {@code FAILED} when nothing was authenticated.
+     */
+    static AuthenticationResult handleSAML11UnsolicitedResponseExtended(Request request, HttpServletResponse response, LoginConfig loginConfig, AbstractSPFormAuthenticator formAuthenticator) throws IOException {
         String samlResponse = request.getParameter(GeneralConstants.SAML_RESPONSE_KEY);
 
         Principal principal = request.getUserPrincipal();
 
         // If we have already authenticated the user and there is no request from IDP or logout from user
         if (principal != null)
-            return true;
+            return AuthenticationResult.PASSED;
 
         Session session = request.getSessionInternal(true);
 
@@ -137,18 +147,20 @@ public abstract class AbstractSAML11SPRedirectFormAuthenticator extends Abstract
                 session.setNote(Constants.SESS_PASSWORD_NOTE, password);
                 request.setUserPrincipal(principal);
 
-                if (formAuthenticator.saveRestoreRequest) {
-                    formAuthenticator.restoreRequest(request, session);
+                AuthenticationResult result = AuthenticationResult.PASSED;
+                if (formAuthenticator.saveRestoreRequest
+                    && formAuthenticator.restoreRequest(request, session) == AuthenticationResult.PASSED_CONSTRAINTS_NEED_REFRESH) {
+                    result = AuthenticationResult.PASSED_CONSTRAINTS_NEED_REFRESH;
                 }
                 formAuthenticator.register(request, response, principal, HttpServletRequest.FORM_AUTH, username, password);
 
-                return true;
+                return result;
             } catch (Exception e) {
                 logger.samlSPHandleRequestError(e);
             }
         }
 
-        return false;
+        return AuthenticationResult.FAILED;
     }
 
     protected void startPicketLink() throws LifecycleException{
