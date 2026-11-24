@@ -18,7 +18,7 @@
  */
 package org.gatein.sso.saml.plugin.valve;
 
-import static org.gatein.sso.saml.plugin.valve.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponse;
+import static org.gatein.sso.saml.plugin.valve.AbstractSAML11SPRedirectFormAuthenticator.handleSAML11UnsolicitedResponseExtended;
 import static org.picketlink.common.util.StringUtil.isNotNull;
 import static org.picketlink.common.util.StringUtil.isNullOrEmpty;
 
@@ -296,7 +296,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
   }
 
   @Override
-  protected boolean doAuthenticate(Request request, HttpServletResponse response) throws IOException {
+  protected AuthenticationResult doAuthenticateExtended(Request request, HttpServletResponse response) throws IOException {
     if (response instanceof Response) {
       LoginConfig loginConfig = request.getContext().getLoginConfig();
       Response catalinaResponse = (Response) response;
@@ -317,7 +317,8 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     if (response instanceof Response) {
       LoginConfig loginConfig = request.getContext().getLoginConfig();
       Response catalinaResponse = (Response) response;
-      return authenticate(request, catalinaResponse, loginConfig);
+      // Just authenticating so no requirement to refresh constraints
+      return authenticate(request, catalinaResponse, loginConfig).getAuthenticated();
     }
     throw logger.samlSPResponseNotCatalinaResponseError(response);
   }
@@ -329,7 +330,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * .catalina.connector.Request, org.apache.catalina.connector.Response,
    * org.apache.catalina.deploy.LoginConfig)
    */
-  private boolean authenticate(Request request, Response response, LoginConfig loginConfig) throws IOException {
+  private AuthenticationResult authenticate(Request request, Response response, LoginConfig loginConfig) throws IOException {
     try {
       // needs to be done first, *before* accessing any parameters.
       // super.authenticate(..) gets called to late
@@ -355,17 +356,18 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
                  (String) session.getNote(Constants.SESS_PASSWORD_NOTE));
 
         // try to restore the original request (including post data, etc...)
-        if (restoreRequest(request, session).getAuthenticated()) {
+        AuthenticationResult restoreResult = restoreRequest(request, session);
+        if (restoreResult.getAuthenticated()) {
           // success! user is authenticated; continue processing original
-          // request
+          // request, with its security constraints refreshed if its method
+          // changed
           logger.trace("Continuing with restored request.");
-          return true;
         } else {
           // no saved request found...
           logger.trace("Restore of original request failed!");
           response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-          return false;
         }
+        return restoreResult;
       }
 
       // Eagerly look for Local LogOut
@@ -378,7 +380,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
           logger.samlLogoutError(e);
           throw new IOException(e);
         }
-        return false;
+        return AuthenticationResult.FAILED;
       }
 
       String samlRequest = request.getParameter(GeneralConstants.SAML_REQUEST_KEY);
@@ -389,11 +391,11 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
       // If we have already authenticated the user and there is no request from
       // IDP or logout from user
       if (principal != null && !(isGlobalLogout(request) || isNotNull(samlRequest) || isNotNull(samlResponse)))
-        return true;
+        return AuthenticationResult.PASSED;
 
       // General User Request
       if (!isNotNull(samlRequest) && !isNotNull(samlResponse)) {
-        return generalUserRequest(request, response, loginConfig);
+        return toAuthenticationResult(generalUserRequest(request, response, loginConfig));
       }
 
       // Handle a SAML Response from IDP
@@ -403,10 +405,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
 
       // Handle SAML Requests from IDP
       if (isNotNull(samlRequest)) {
-        return handleSAMLRequest(request, response, loginConfig);
+        return toAuthenticationResult(handleSAMLRequest(request, response, loginConfig));
       } // end if
 
-      return localAuthentication(request, response, loginConfig);
+      return toAuthenticationResult(localAuthentication(request, response, loginConfig));
     } catch (IOException e) {
       if (StringUtil.isNotNull(spConfiguration.getErrorPage())) {
         try {
@@ -414,11 +416,15 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
         } catch (ServletException e1) {
           logger.samlErrorPageForwardError(spConfiguration.getErrorPage(), e1);
         }
-        return false;
+        return AuthenticationResult.FAILED;
       } else {
         throw e;
       }
     }
+  }
+
+  private static AuthenticationResult toAuthenticationResult(boolean authenticated) {
+    return authenticated ? AuthenticationResult.PASSED : AuthenticationResult.FAILED;
   }
 
   /**
@@ -528,7 +534,7 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
    * @return true if logged in in SAML SP side
    * @throws IOException any I/O error in authentication process
    */
-  private boolean handleSAMLResponse(Request request, Response response, LoginConfig loginConfig) throws IOException {
+  private AuthenticationResult handleSAMLResponse(Request request, Response response, LoginConfig loginConfig) throws IOException {
     if (!super.validate(request)) {
       throw new IOException(ErrorCodes.VALIDATION_CHECK_FAILED);
     }
@@ -536,10 +542,10 @@ public abstract class AbstractSPFormAuthenticator extends BaseFormAuthenticator 
     String samlVersion = getSAMLVersion(request);
 
     if (!JBossSAMLConstants.VERSION_2_0.get().equals(samlVersion)) {
-      return handleSAML11UnsolicitedResponse(request, response, loginConfig, this);
+      return handleSAML11UnsolicitedResponseExtended(request, response, loginConfig, this);
     }
 
-    return handleSAML2Response(request, response, loginConfig);
+    return toAuthenticationResult(handleSAML2Response(request, response, loginConfig));
   }
 
   private boolean handleSAML2Response(Request request, Response response, LoginConfig loginConfig) throws IOException {
